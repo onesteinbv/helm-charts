@@ -46,21 +46,21 @@ spec:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- if .Values.persistence.enabled }}
             - mountPath: /lc-core/data
               name: {{ include "librecaptcha.fullname" . }}
             {{- end }}
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
         {{- if .Values.persistence.enabled }}
         - name: {{ include "librecaptcha.fullname" . }}
           persistentVolumeClaim:
             claimName: {{ include "librecaptcha.fullname" . }}
         {{- end }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
