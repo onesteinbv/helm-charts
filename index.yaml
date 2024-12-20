@@ -11,4 +11,15 @@ entries:
     urls:
     - https://github.com/onesteinbv/helm-charts/releases/download/helm-kwkhtmltopdf-1.0.0/kwkhtmltopdf-1.0.0.tgz
     version: 1.0.0
-generated: "2024-12-20T11:08:56.713422491Z"
+  librecaptcha:
+  - apiVersion: v2
+    appVersion: "2.0"
+    created: "2024-12-20T15:25:50.593453397Z"
+    description: An open-source CAPTCHA system
+    digest: f6368dce974d8eefa347ec1dbcfbf214054d7da889d3c6a0c1bbdc54ef897eee
+    name: librecaptcha
+    type: application
+    urls:
+    - https://github.com/onesteinbv/helm-charts/releases/download/helm-librecaptcha-0.1.0/librecaptcha-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-12-20T15:25:50.593462353Z"
