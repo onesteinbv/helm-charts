@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  kwkhtmltopdf:
+  - apiVersion: v2
+    appVersion: 0.12.6.1-latest
+    created: "2024-12-20T11:08:56.713409487Z"
+    description: A wkhtmlpdf server with drop-in client.
+    digest: df0a5fa52023114cdaf1f8050fc571a11eb8beefc996b35f054e7ef4e7615029
+    name: kwkhtmltopdf
+    type: application
+    urls:
+    - https://github.com/onesteinbv/helm-charts/releases/download/helm-kwkhtmltopdf-1.0.0/kwkhtmltopdf-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-12-20T11:08:56.713422491Z"
