@@ -65,7 +65,7 @@ spec:
             - name: RUNBOAT_API_ADMIN_PASSWD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.runboat.secret.name | default include "runboat.fullname" . | quote }}
+                  name: {{ .Values.runboat.secret.name | default (include "runboat.fullname" .) | quote }}
                   key: {{ .Values.runboat.secret.adminPasswordKey | default "password" | quote }}
             - name: RUNBOAT_MAX_INITIALIZING
               value: {{ .Values.runboat.maxInitializing | quote }}
@@ -80,7 +80,7 @@ spec:
             - name: RUNBOAT_BUILD_SECRET_ENV
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.runboat.secret.name | default include "runboat.fullname" . | quote }}
+                  name: {{ .Values.runboat.secret.name | default (include "runboat.fullname" .) | quote }}
                   key: {{ .Values.runboat.secret.buildSecretEnvKey | quote }}
             {{- end }}
             {{- end }}
@@ -93,8 +93,8 @@ spec:
             - name: RUNBOAT_GITHUB_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.runboat.secret.name | default include "runboat.fullname" . | quote }}
-                  key: {{ .Values.runboat.secret.githubTokenKey default "githubToken" | quote }}
+                  name: {{ .Values.runboat.secret.name | default (include "runboat.fullname" .) | quote }}
+                  key: {{ .Values.runboat.secret.githubTokenKey | default "githubToken" | quote }}
             - name: RUNBOAT_REPOS
               value: {{ .Values.runboat.repos | toJson }}
       {{- with .Values.volumes }}
