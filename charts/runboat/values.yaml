@@ -108,8 +108,8 @@ runboat:
     name: ""
     key: ""
   githubTokenSecret: 
-    name: "" # default: "githubToken"
-    key: ""
+    name: "" 
+    key: ""  # default: "githubToken"
   maxInitializing: 5
   maxStarted: 15
   maxDeployed: 20
