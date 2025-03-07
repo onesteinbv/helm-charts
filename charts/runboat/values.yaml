@@ -101,11 +101,15 @@ affinity: {}
 runboat:
   buildNamespace: "runboat-builds"
   adminUser: "admin"
-  secret:
+  adminSecret:
     name: ""
-    adminPasswordKey: ""  # default: "password"
-    buildSecretEnvKey: ""
-    githubTokenKey: "" # default: "githubToken"
+    key: ""  # default: "password"
+  buildSecret:
+    name: ""
+    key: ""
+  githubTokenSecret: 
+    name: "" # default: "githubToken"
+    key: ""
   maxInitializing: 5
   maxStarted: 15
   maxDeployed: 20

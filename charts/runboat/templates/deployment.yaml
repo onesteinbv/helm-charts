@@ -65,8 +65,8 @@ spec:
             - name: RUNBOAT_API_ADMIN_PASSWD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.runboat.secret.name | default (include "runboat.fullname" .) | quote }}
-                  key: {{ .Values.runboat.secret.adminPasswordKey | default "password" | quote }}
+                  name: {{ .Values.runboat.adminSecret.name | default (include "runboat.fullname" .) | quote }}
+                  key: {{ .Values.runboat.adminSecret.key | default "password" | quote }}
             - name: RUNBOAT_MAX_INITIALIZING
               value: {{ .Values.runboat.maxInitializing | quote }}
             - name: RUNBOAT_MAX_STARTED
@@ -76,12 +76,12 @@ spec:
             - name: RUNBOAT_BUILD_ENV
               value: {{ .Values.runboat.buildEnv | toJson }}
             {{- with .Values.runboat.secret }}
-            {{- if .buildSecretEnvKey }}
+            {{- if .buildSecret.name }}
             - name: RUNBOAT_BUILD_SECRET_ENV
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.runboat.secret.name | default (include "runboat.fullname" .) | quote }}
-                  key: {{ .Values.runboat.secret.buildSecretEnvKey | quote }}
+                  name: {{ .Values.runboat.buildSecret.name | quote }}
+                  key: {{ .Values.runboat.buildSecret.key | quote }}
             {{- end }}
             {{- end }}
             - name: RUNBOAT_BUILD_TEMPLATE_VARS
@@ -93,8 +93,8 @@ spec:
             - name: RUNBOAT_GITHUB_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.runboat.secret.name | default (include "runboat.fullname" .) | quote }}
-                  key: {{ .Values.runboat.secret.githubTokenKey | default "githubToken" | quote }}
+                  name: {{ .Values.runboat.githubTokenSecret.name | default (include "runboat.fullname" .) | quote }}
+                  key: {{ .Values.runboat.githubTokenSecret.key | default "githubToken" | quote }}
             - name: RUNBOAT_REPOS
               value: {{ .Values.runboat.repos | toJson }}
       {{- with .Values.volumes }}
