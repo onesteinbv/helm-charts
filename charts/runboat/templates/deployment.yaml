@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "runboat.fullname" . }}
+  labels:
+    {{- include "runboat.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "runboat.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "runboat.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "runboat.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: RUNBOAT_BUILD_NAMESPACE
+              value: {{ .Values.runboat.buildNamespace | quote }}
+            - name: RUNBOAT_API_ADMIN_USER
+              value: {{ .Values.runboat.adminUser | quote }}
+            - name: RUNBOAT_API_ADMIN_PASSWD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.runboat.secret.name | default include "runboat.fullname" . | quote }}
+                  key: {{ .Values.runboat.secret.adminPasswordKey | default "password" | quote }}
+            - name: RUNBOAT_MAX_INITIALIZING
+              value: {{ .Values.runboat.maxInitializing | quote }}
+            - name: RUNBOAT_MAX_STARTED
+              value: {{ .Values.runboat.maxStarted | quote }}
+            - name: RUNBOAT_MAX_DEPLOYED
+              value: {{ .Values.runboat.maxDeployed | quote }}
+            - name: RUNBOAT_BUILD_ENV
+              value: {{ .Values.runboat.buildEnv | toJson }}
+            {{- with .Values.runboat.secret }}
+            {{- if .buildSecretEnvKey }}
+            - name: RUNBOAT_BUILD_SECRET_ENV
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.runboat.secret.name | default include "runboat.fullname" . | quote }}
+                  key: {{ .Values.runboat.secret.buildSecretEnvKey | quote }}
+            {{- end }}
+            {{- end }}
+            - name: RUNBOAT_BUILD_TEMPLATE_VARS
+              value: {{ .Values.runboat.buildTemplateVars | toJson }}
+            - name: RUNBOAT_BASE_URL
+              value: http{{- if .Values.ingress.tls -}}s{{- end -}}://{{ .Values.ingress.host }}
+            - name: RUNBOAT_BUILD_DOMAIN
+              value: {{ .Values.runboat.buildDomain | quote }}
+            - name: RUNBOAT_GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.runboat.secret.name | default include "runboat.fullname" . | quote }}
+                  key: {{ .Values.runboat.secret.githubTokenKey default "githubToken" | quote }}
+            - name: RUNBOAT_REPOS
+              value: {{ .Values.runboat.repos | toJson }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

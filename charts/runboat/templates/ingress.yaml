@@ -1,0 +1,31 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "runboat.fullname" . }}
+  labels:
+    {{- include "runboat.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  ingressClassName: {{ with .Values.ingress.className }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+       - {{ .Values.ingress.host | quote }}
+      secretName: {{ .Values.ingress.tls.secretName | default (printf "%s-%s" .Values.ingress.host "tls") | quote }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ include "runboat.fullname" $ }}
+                port:
+                  name: http
+{{- end }}
