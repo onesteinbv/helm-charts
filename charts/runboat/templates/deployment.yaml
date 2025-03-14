@@ -74,7 +74,7 @@ spec:
             - name: RUNBOAT_MAX_DEPLOYED
               value: {{ .Values.runboat.maxDeployed | quote }}
             - name: RUNBOAT_BUILD_ENV
-              value: {{ .Values.runboat.buildEnv | toJson }}
+              value: {{ .Values.runboat.buildEnv | toJson | quote }}
             {{- with .Values.runboat.secret }}
             {{- if .buildSecret.name }}
             - name: RUNBOAT_BUILD_SECRET_ENV
@@ -85,7 +85,7 @@ spec:
             {{- end }}
             {{- end }}
             - name: RUNBOAT_BUILD_TEMPLATE_VARS
-              value: {{ .Values.runboat.buildTemplateVars | toJson }}
+              value: {{ .Values.runboat.buildTemplateVars | toJson | quote }}
             - name: RUNBOAT_BASE_URL
               value: http{{- if .Values.ingress.tls.enabled -}}s{{- end -}}://{{ .Values.ingress.host }}
             - name: RUNBOAT_BUILD_DOMAIN
@@ -96,7 +96,7 @@ spec:
                   name: {{ .Values.runboat.githubTokenSecret.name | default (include "runboat.fullname" .) | quote }}
                   key: {{ .Values.runboat.githubTokenSecret.key | default "githubToken" | quote }}
             - name: RUNBOAT_REPOS
-              value: {{ .Values.runboat.repos | toJson }}
+              value: {{ .Values.runboat.repos | toJson | quote }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
