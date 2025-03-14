@@ -59,7 +59,9 @@ ingress:
   className: ""
   annotations: {}
   host: chart-example.local
-  tls: false
+  tls: 
+    enabled: false
+    secretName: 
 
 resources: 
   requests:

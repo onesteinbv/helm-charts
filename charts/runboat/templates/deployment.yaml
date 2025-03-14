@@ -87,7 +87,7 @@ spec:
             - name: RUNBOAT_BUILD_TEMPLATE_VARS
               value: {{ .Values.runboat.buildTemplateVars | toJson }}
             - name: RUNBOAT_BASE_URL
-              value: http{{- if .Values.ingress.tls -}}s{{- end -}}://{{ .Values.ingress.host }}
+              value: http{{- if .Values.ingress.tls.enabled -}}s{{- end -}}://{{ .Values.ingress.host }}
             - name: RUNBOAT_BUILD_DOMAIN
               value: {{ .Values.runboat.buildDomain | quote }}
             - name: RUNBOAT_GITHUB_TOKEN
