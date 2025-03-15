@@ -112,6 +112,9 @@ runboat:
   githubTokenSecret: 
     name: "" 
     key: ""  # default: "githubToken"
+  githubWebhookSecret:
+    name: ""
+    key: ""  # default: "secret"
   maxInitializing: 5
   maxStarted: 15
   maxDeployed: 20

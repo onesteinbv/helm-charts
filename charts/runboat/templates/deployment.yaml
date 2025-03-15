@@ -75,13 +75,13 @@ spec:
               value: {{ .Values.runboat.maxDeployed | quote }}
             - name: RUNBOAT_BUILD_ENV
               value: {{ .Values.runboat.buildEnv | toJson | quote }}
-            {{- with .Values.runboat.secret }}
-            {{- if .buildSecret.name }}
+            {{- with .Values.runboat.buildSecret }}
+            {{- if .name }}
             - name: RUNBOAT_BUILD_SECRET_ENV
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.runboat.buildSecret.name | quote }}
-                  key: {{ .Values.runboat.buildSecret.key | quote }}
+                  name: {{ .name | quote }}
+                  key: {{ .key | quote }}
             {{- end }}
             {{- end }}
             - name: RUNBOAT_BUILD_TEMPLATE_VARS
@@ -97,6 +97,15 @@ spec:
                   key: {{ .Values.runboat.githubTokenSecret.key | default "githubToken" | quote }}
             - name: RUNBOAT_REPOS
               value: {{ .Values.runboat.repos | toJson | quote }}
+            {{- with .Values.runboat.githubWebhookSecret }}
+            {{- if .name }}
+            - name: RUNBOAT_GITHUB_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .name | quote }}
+                  key: {{ .key | default "secret" | quote }}
+            {{- end }}
+            {{- end }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
