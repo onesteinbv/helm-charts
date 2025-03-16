@@ -106,6 +106,9 @@ spec:
                   key: {{ .key | default "secret" | quote }}
             {{- end }}
             {{- end }}
+            {{- with .Values.runboat.extraEnv }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

@@ -129,6 +129,7 @@ runboat:
   #   branch: "^16.0$"
   #   builds:
   #     - image: "ghcr.io/oca/oca-ci/py3.8-odoo15.0:latest"
+  extraEnv: []
 
 postgresql:
   enabled: true
