@@ -119,7 +119,7 @@ runboat:
   maxStarted: 15
   maxDeployed: 20
   buildEnv: {}
-  #  PGHOST: "postgresql"
+  #  PGHOST: "runboat-postgresql.runboat-builds.svc.cluster.local"
   #  PGPORT: "odoo"
   #  PGUSER: "odoo"
   buildTemplateVars: {}
