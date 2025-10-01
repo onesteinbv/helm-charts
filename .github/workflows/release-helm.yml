@@ -26,6 +26,13 @@ jobs:
         with:
           version: v3.4.2
 
+      - name: Lint Helm Charts
+        run: |
+          helm repo add bitnami oci://registry-1.docker.io/bitnamicharts
+          for chart in $(find . -name "Chart.yaml" -exec dirname {} \;); do 
+            helm dependency build "$chart" && helm lint "$chart"
+          done
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
         with:
