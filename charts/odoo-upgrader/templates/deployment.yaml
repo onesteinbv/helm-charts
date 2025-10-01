@@ -75,6 +75,8 @@ spec:
             {{- end }}
             - name: ODOO_UPGRADER_JOB_DOMAIN
               value: {{ .Values.odooUpgrader.jobDomain | quote }}
+            - name: ODOO_UPGRADER_UPGRADE_PATHS
+              value: {{ .Values.odooUpgrader.upgradePaths | toJson | quote }}
             - name: ARGO_SERVER
               value: {{ .Values.odooUpgrader.argo.server | quote }}
             - name: ARGO_NAMESPACE
