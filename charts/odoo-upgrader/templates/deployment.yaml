@@ -74,8 +74,8 @@ spec:
             {{- end }}
             {{- end }}
             - name: ODOO_UPGRADER_JOB_DOMAIN
-              value: {{ .Values.runboat.jobDomain | quote }}
-            {{- with .Values.runboat.extraEnv }}
+              value: {{ .Values.odooUpgrader.jobDomain | quote }}
+            {{- with .Values.odooUpgrader.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
       {{- with .Values.volumes }}
