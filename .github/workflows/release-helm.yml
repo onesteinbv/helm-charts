@@ -28,7 +28,7 @@ jobs:
 
       - name: Lint Helm Charts
         run: |
-          helm repo add bitnami oci://registry-1.docker.io/bitnamicharts
+          helm repo add bitnami https://charts.bitnami.com/bitnami
           for chart in $(find . -name "Chart.yaml" -exec dirname {} \;); do 
             helm dependency build "$chart" && helm lint "$chart"
           done
