@@ -1,0 +1,21 @@
+name: Test Helm Charts
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Helm
+        uses: azure/setup-helm@v3.4
+        with:
+          version: v3.4.2
+
+      - name: Lint Helm Charts
+        run: |
+          for chart in $(find . -name "Chart.yaml" -exec dirname {} \;); do 
+            helm dependency build "$chart" && helm lint "$chart"
+          done
