@@ -58,54 +58,23 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
-            - name: RUNBOAT_BUILD_NAMESPACE
-              value: {{ .Values.runboat.buildNamespace | quote }}
-            - name: RUNBOAT_API_ADMIN_USER
-              value: {{ .Values.runboat.adminUser | quote }}
-            - name: RUNBOAT_API_ADMIN_PASSWD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.runboat.adminSecret.name | default (include "odoo-upgrader.fullname" .) | quote }}
-                  key: {{ .Values.runboat.adminSecret.key | default "password" | quote }}
-            - name: RUNBOAT_MAX_INITIALIZING
-              value: {{ .Values.runboat.maxInitializing | quote }}
-            - name: RUNBOAT_MAX_STARTED
-              value: {{ .Values.runboat.maxStarted | quote }}
-            - name: RUNBOAT_MAX_DEPLOYED
-              value: {{ .Values.runboat.maxDeployed | quote }}
-            - name: RUNBOAT_BUILD_ENV
-              value: {{ .Values.runboat.buildEnv | toJson | quote }}
-            {{- with .Values.runboat.buildSecret }}
+            - name: ODOO_UPGRADER_JOB_NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: ODOO_UPGRADER_CONCURRENT_JOBS_LIMIT
+              value: {{ .Values.odooUpgrader.concurrentJobsLimit | quote }}
+            - name: ODOO_UPGRADER_JOB_ENV
+              value: {{ .Values.odooUpgrader.jobEnv | toJson | quote }}
+            {{- with .Values.odooUpgrader.jobSecretEnv }}
             {{- if .name }}
-            - name: RUNBOAT_BUILD_SECRET_ENV
+            - name: ODOO_UPGRADER_JOB_SECRET_ENV
               valueFrom:
                 secretKeyRef:
                   name: {{ .name | quote }}
                   key: {{ .key | quote }}
             {{- end }}
             {{- end }}
-            - name: RUNBOAT_BUILD_TEMPLATE_VARS
-              value: {{ .Values.runboat.buildTemplateVars | toJson | quote }}
-            - name: RUNBOAT_BASE_URL
-              value: http{{- if .Values.ingress.tls.enabled -}}s{{- end -}}://{{ .Values.ingress.host }}
-            - name: RUNBOAT_BUILD_DOMAIN
-              value: {{ .Values.runboat.buildDomain | quote }}
-            - name: RUNBOAT_GITHUB_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.runboat.githubTokenSecret.name | default (include "odoo-upgrader.fullname" .) | quote }}
-                  key: {{ .Values.runboat.githubTokenSecret.key | default "githubToken" | quote }}
-            - name: RUNBOAT_REPOS
-              value: {{ .Values.runboat.repos | toJson | quote }}
-            {{- with .Values.runboat.githubWebhookSecret }}
-            {{- if .name }}
-            - name: RUNBOAT_GITHUB_WEBHOOK_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .name | quote }}
-                  key: {{ .key | default "secret" | quote }}
-            {{- end }}
-            {{- end }}
+            - name: ODOO_UPGRADER_JOB_DOMAIN
+              value: {{ .Values.runboat.jobDomain | quote }}
             {{- with .Values.runboat.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}

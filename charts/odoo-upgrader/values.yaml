@@ -101,7 +101,21 @@ tolerations: []
 affinity: {}
 
 odooUpgrader:
-  
+  concurrentJobsLimit: 3
+  s3:
+    endpoint: ""
+    bucket: ""
+    secret:
+      name: ""
+      accessKey: "access-key"
+      secretKey: "secret-key"
+  jobDomain: "upgrade.chart-example.local"
+  jobEnv: {}
+  jobSecretEnv:
+    name: ""
+    key: ""
+  extraEnv: []
+
 
 postgresql:
   enabled: true

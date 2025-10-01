@@ -44,8 +44,8 @@ metadata:
   name: {{ include "odoo-upgrader.fullname" . }}
 subjects:
   - kind: ServiceAccount
-    name: default
-    namespace: {{ include "odoo-upgrader.serviceAccountName" . }}
+    name: {{ include "odoo-upgrader.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: {{ include "odoo-upgrader.fullname" . }}
