@@ -109,11 +109,19 @@ odooUpgrader:
       name: ""
       accessKey: "access-key"
       secretKey: "secret-key"
+  argo:
+    server: ""
+    namespace: "argo"
+    secure: false
+    secret:
+      name: ""
+      key: "token"
   jobDomain: "upgrade.chart-example.local"
   jobEnv: {}
   jobSecretEnv:
     name: ""
     key: ""
+  upgradePaths: {}
   extraEnv: []
 
 

@@ -75,6 +75,21 @@ spec:
             {{- end }}
             - name: ODOO_UPGRADER_JOB_DOMAIN
               value: {{ .Values.odooUpgrader.jobDomain | quote }}
+            - name: ARGO_SERVER
+              value: {{ .Values.odooUpgrader.argo.server | quote }}
+            - name: ARGO_NAMESPACE
+              value: {{ .Values.odooUpgrader.argo.namespace | quote }}
+            - name: ARGO_SECURE
+              value: {{ .Values.odooUpgrader.argo.secure | quote }}
+            {{- with .Values.odooUpgrader.argo.secret }}
+            {{- if .name }}
+            - name: ARGO_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .name | quote }}
+                  key: {{ .key | quote }}
+            {{- end }}
+            {{- end }}
             {{- with .Values.odooUpgrader.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
