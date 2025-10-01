@@ -24,11 +24,11 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3.4
         with:
-          version: v3.4.2
+          version: v3.19.0
 
       - name: Lint Helm Charts
         run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
+          set -euo pipefail
           for chart in $(find . -name "Chart.yaml" -exec dirname {} \;); do 
             helm dependency build "$chart" && helm lint "$chart"
           done
