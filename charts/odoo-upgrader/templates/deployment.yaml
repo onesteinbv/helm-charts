@@ -83,6 +83,19 @@ spec:
               value: {{ .Values.odooUpgrader.argo.namespace | quote }}
             - name: ARGO_SECURE
               value: {{ .Values.odooUpgrader.argo.secure | quote }}
+            - name: ODOO_UPGRADER_API_KEY
+            {{- with .Values.odooUpgrader.apiKeySecret }}
+            {{- if .generate }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "odoo-upgrader.fullname" . }}
+                  key: "apiKey"
+            {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .name }}
+                  key: {{ .key }}
+            {{- end }}              
             {{- with .Values.odooUpgrader.argo.secret }}
             {{- if .name }}
             - name: ARGO_TOKEN

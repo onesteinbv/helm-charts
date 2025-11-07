@@ -121,6 +121,10 @@ odooUpgrader:
   jobSecretEnv:
     name: ""
     key: ""
+  apiKeySecret:
+    generate: true
+    name: ""
+    key: ""
   upgradePaths: {}
   extraEnv: []
 
