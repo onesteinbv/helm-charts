@@ -88,14 +88,15 @@ spec:
             {{- if .generate }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "odoo-upgrader.fullname" . }}
+                  name: {{ include "odoo-upgrader.fullname" $ }}
                   key: "apiKey"
             {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .name }}
-                  key: {{ .key }}
-            {{- end }}              
+                  name: {{ .name | quote }}
+                  key: {{ .key | quote  }}
+            {{- end }}
+            {{- end }}
             {{- with .Values.odooUpgrader.argo.secret }}
             {{- if .name }}
             - name: ARGO_TOKEN
