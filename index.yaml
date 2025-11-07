@@ -32,6 +32,22 @@ entries:
     urls:
     - https://github.com/onesteinbv/helm-charts/releases/download/helm-librecaptcha-0.1.0/librecaptcha-0.1.0.tgz
     version: 0.1.0
+  odoo-upgrader:
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2025-11-07T14:37:26.849866678Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 16.4.16
+    description: End-to-end upgrader from one Odoo major version to another
+    digest: 1219eb465c520e986bfbc09b47d286cebb47e11b927179c5a07a48da80a10306
+    name: odoo-upgrader
+    type: application
+    urls:
+    - https://github.com/onesteinbv/helm-charts/releases/download/helm-odoo-upgrader-0.1.0/odoo-upgrader-0.1.0.tgz
+    version: 0.1.0
   runboat:
   - apiVersion: v2
     created: "2025-03-16T15:49:06.507086006Z"
@@ -131,4 +147,4 @@ entries:
     urls:
     - https://github.com/onesteinbv/helm-charts/releases/download/helm-runboat-0.1.0/runboat-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-16T15:49:06.507117033Z"
+generated: "2025-11-07T14:37:27.058557442Z"
