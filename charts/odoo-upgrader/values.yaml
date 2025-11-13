@@ -121,7 +121,7 @@ odooUpgrader:
   jobSecretEnv:
     name: ""
     key: ""
-  apiKeySecret:
+  adminPasswordSecret:
     generate: true
     name: ""
     key: ""
