@@ -106,6 +106,22 @@ spec:
                   key: {{ .key | quote }}
             {{- end }}
             {{- end }}
+            {{- with .Values.odooUpgrader.s3 }}
+            - name: ODOO_UPGRADER_S3__ENDPOINT
+              value: {{ .endpoint | quote }}
+            - name: ODOO_UPGRADER_S3__BUCKET
+              value: {{ .bucket | quote }}
+            - name: ODOO_UPGRADER_S3__ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secret.name | quote }}
+                  key: {{ .secret.accessKey | quote }}
+            - name: ODOO_UPGRADER_S3__SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secret.name | quote }}
+                  key: {{ .secret.secretKey | quote }}
+            {{- end }}
             {{- with .Values.odooUpgrader.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
