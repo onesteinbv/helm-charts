@@ -34,10 +34,7 @@ podLabels: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext:
-  fsGroup: 999
-  runAsGroup: 999
-  runAsUser: 999
+securityContext: {}
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
