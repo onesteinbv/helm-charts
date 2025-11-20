@@ -60,3 +60,20 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/* 
+Postgresql connection url
+*}}
+{{- define "odoo-upgrader.dbUrl" -}}
+{{- if .Values.odooUpgrader.dbUrl }}
+{{- .Values.odooUpgrader.dbUrl }}
+{{- else if .Values.postgresql.enabled }}
+{{- $db := include "odoo-upgrader.fullname" . }}
+{{- $postgres := sprintf "%s-%s" $db "postgres" }}
+{{- printf "postgresql://%s:%s@%s:5432/%s" .Values.postgresql.auth.username .Values.postgresql.auth.password $postgres $db }}
+{{- else if .Values.odooUpgrader.persistence.enabled }}
+sqlite:////data/app.db
+{{- else }}
+sqlite:///app.db
+{{- end }}
+{{- end }}

@@ -1,3 +1,4 @@
+{{ - if .Values.odooUpgrader.persistence.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -9,3 +10,4 @@ spec:
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
+{{- end }}

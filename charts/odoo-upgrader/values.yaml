@@ -34,13 +34,10 @@ podLabels: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+securityContext:
+  fsGroup: 999
+  runAsGroup: 999
+  runAsUser: 999
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
@@ -128,7 +125,9 @@ odooUpgrader:
     key: ""
   upgradePaths: {}
   extraEnv: []
+  dbUrl: ""
   persistence:
+    enabled: true
     size: 512Mi
 
 postgresql:
