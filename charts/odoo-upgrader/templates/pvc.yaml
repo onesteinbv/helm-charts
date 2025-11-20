@@ -1,4 +1,4 @@
-{{ - if .Values.odooUpgrader.persistence.enabled }}
+{{- if .Values.odooUpgrader.persistence.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
