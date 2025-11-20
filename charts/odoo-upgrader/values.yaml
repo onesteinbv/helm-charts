@@ -128,7 +128,8 @@ odooUpgrader:
     key: ""
   upgradePaths: {}
   extraEnv: []
-
+  persistence:
+    size: 512Mi
 
 postgresql:
   enabled: true

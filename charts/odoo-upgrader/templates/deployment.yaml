@@ -56,8 +56,12 @@ spec:
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
+            - mountPath: /data
+              name: data
           {{- end }}
           env:
+            - name: ODOO_UPGRADER_DB_URL
+              value: sqlite:////data/app.db
             - name: ODOO_UPGRADER_JOB_NAMESPACE
               value: {{ default .Release.Namespace .Values.odooUpgrader.jobNamespace }}
             - name: ODOO_UPGRADER_CONCURRENT_JOBS_LIMIT
@@ -127,6 +131,9 @@ spec:
             {{- end }}
       {{- with .Values.volumes }}
       volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "odoo-upgrader.fullname" . }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
