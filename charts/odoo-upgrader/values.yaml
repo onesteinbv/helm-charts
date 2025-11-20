@@ -117,6 +117,7 @@ odooUpgrader:
       name: ""
       key: "token"
   jobDomain: "upgrade.chart-example.local"
+  jobNamespace: ""
   jobEnv: {}
   jobSecretEnv:
     name: ""

@@ -59,7 +59,7 @@ spec:
           {{- end }}
           env:
             - name: ODOO_UPGRADER_JOB_NAMESPACE
-              value: {{ .Release.Namespace }}
+              value: {{ default .Release.Namespace .Values.odooUpgrader.jobNamespace }}
             - name: ODOO_UPGRADER_CONCURRENT_JOBS_LIMIT
               value: {{ .Values.odooUpgrader.concurrentJobsLimit | quote }}
             - name: ODOO_UPGRADER_JOB_ENV

@@ -32,7 +32,7 @@ rules:
     verbs: ["create", "patch", "get", "list", "watch", "delete"]
   - apiGroups: [""]
     resources: ["secrets"]
-    verbs: ["create", "delete"]
+    verbs: ["create", "patch", "get", "list", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
