@@ -35,6 +35,21 @@ entries:
   odoo-upgrader:
   - apiVersion: v2
     appVersion: v0.5.0
+    created: "2026-01-07T09:18:35.61223521Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 16.4.16
+    description: End-to-end upgrader from one Odoo major version to another
+    digest: 9ef4b4b296a0f8800d1c078d72c92a6ed3b92230eb5e656ee1697526cdf79d33
+    name: odoo-upgrader
+    type: application
+    urls:
+    - https://github.com/onesteinbv/helm-charts/releases/download/helm-odoo-upgrader-0.13.0/odoo-upgrader-0.13.0.tgz
+    version: 0.13.0
+  - apiVersion: v2
+    appVersion: v0.5.0
     created: "2026-01-06T12:09:35.76237682Z"
     dependencies:
     - condition: postgresql.enabled
@@ -342,4 +357,4 @@ entries:
     urls:
     - https://github.com/onesteinbv/helm-charts/releases/download/helm-runboat-0.1.0/runboat-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-06T12:09:35.762491305Z"
+generated: "2026-01-07T09:18:35.612342951Z"
