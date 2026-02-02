@@ -36,15 +36,16 @@ jobs:
       - name: Add Helm repositories
         run: |
           set -euo pipefail
-          for chart in $(find . -name "Chart.yaml" -exec dirname {} \;); do
-            # Extract dependency repositories from Chart.yaml
-            repos=$(cat "$chart/Chart.yaml" | yq -r '.dependencies[]?.repository' | grep https)
-            for repo in $repos; do
-              # Extract repo name from URL
-              repo_name=$(basename $repo)
-              helm repo add "$repo_name" "$repo" --force-update
-            done
-          done
+          helm repo add "mailcow-operator" "https://tarteo.github.io/mailcow-operator"
+        #   for chart in $(find . -name "Chart.yaml" -exec dirname {} \;); do
+        #     # Extract dependency repositories from Chart.yaml
+        #     repos=$(cat "$chart/Chart.yaml" | yq -r '.dependencies[]?.repository' | grep https)
+        #     for repo in $repos; do
+        #       # Extract repo name from URL
+        #       repo_name=$(basename $repo)
+        #       helm repo add "$repo_name" "$repo" --force-update
+        #     done
+        #   done
 
       - name: Lint Helm Charts
         run: |
