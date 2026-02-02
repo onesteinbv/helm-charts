@@ -32,6 +32,23 @@ entries:
     urls:
     - https://github.com/onesteinbv/helm-charts/releases/download/helm-librecaptcha-0.1.0/librecaptcha-0.1.0.tgz
     version: 0.1.0
+  mailcow:
+  - apiVersion: v2
+    created: "2026-02-02T14:55:42.205729534Z"
+    dependencies:
+    - condition: mailcowOperator.enabled
+      name: mailcow-operator
+      repository: https://tarteo.github.io/mailcow-operator
+      version: 1.1.0
+    description: 'Deploy mailcow-operator including Mailcow resources on Kubernetes.
+      This acts as a shortcut to deploy mailcow-operator along with Mailcow, Domains,
+      DomainAdmins and Mailboxes. '
+    digest: 31cf561a06112299bc98f902017ebfbe4d9c2a7877b9ceb494be71eb76730309
+    name: mailcow
+    type: application
+    urls:
+    - https://github.com/onesteinbv/helm-charts/releases/download/helm-mailcow-0.1.0/mailcow-0.1.0.tgz
+    version: 0.1.0
   odoo-upgrader:
   - apiVersion: v2
     appVersion: v0.5.0
@@ -357,4 +374,4 @@ entries:
     urls:
     - https://github.com/onesteinbv/helm-charts/releases/download/helm-runboat-0.1.0/runboat-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-07T09:18:35.612342951Z"
+generated: "2026-02-02T14:55:42.205810565Z"
