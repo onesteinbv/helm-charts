@@ -1,0 +1,20 @@
+{{- range $mailcow := .Values.mailcows }}
+{{- range $admin := $mailcow.admins }}
+apiVersion: mailcow.onestein.nl/v1
+kind: DomainAdmin
+metadata:
+  name: {{ printf "%s-%s" $mailcow.name $admin.username | lower }}
+spec:
+  mailcow: {{ $mailcow.name }}
+  username: {{ $admin.username | quote }}
+  passwordSecret:
+    name: {{ $admin.passwordSecret.name }}
+    key: {{ $admin.passwordSecret.key }}
+  domains:
+{{- range $domain := $admin.domains }}
+    - {{ $domain | quote }}
+{{- end }}
+  active: {{ $admin.active }}
+---
+{{- end }}
+{{- end }}
