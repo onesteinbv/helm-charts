@@ -1,0 +1,6 @@
+dependencies:
+- name: mailcow-operator
+  repository: https://tarteo.github.io/mailcow-operator
+  version: 1.1.0
+digest: sha256:c888f06cd91fcdbb31075354ab7eabb27a1d9b390cede8a47126fe380ba30625
+generated: "2026-02-02T15:00:43.575115246+01:00"
