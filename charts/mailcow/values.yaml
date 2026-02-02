@@ -1,0 +1,37 @@
+mailcows: []
+# - name: example-mailcow
+#   endpoint: "https://mail.example.com"
+#   secret:
+#     name: example-mailcow-secret
+#     key: apiToken
+#   domains:
+#     - domain: "example.com"
+#       description: "Example Domain"
+#       quota: 1000
+#       defQuota: 500
+#       maxQuota: 500
+#       active: true
+#       maxMailboxes: 60
+#       mailboxes:
+#         - localPart: "user"
+#           name: "mr. example"
+#           passwordSecret:
+#             name: mailbox-password-secret
+#             key: password
+#           quota: 500
+#           active: true
+#       aliases:
+#         - address: ""
+#           goTo: "catchall"
+#           active: true
+#   admins:
+#     - username: "admin"
+#       passwordSecret:
+#         name: domainadmin-password-secret
+#         key: password
+#       domains:
+#         - "example.com"
+#       active: true
+
+mailcowOperator:
+  enabled: false

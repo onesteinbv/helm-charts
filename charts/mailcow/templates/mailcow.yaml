@@ -1,0 +1,12 @@
+{{- range .Values.mailcows }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Mailcow
+metadata:
+  name: {{ .name }}
+spec:
+  endpoint: {{ .endpoint }}
+  secret:
+    name: {{ .secret.name }}
+    key: {{ .secret.key }}
+---    
+{{- end }}

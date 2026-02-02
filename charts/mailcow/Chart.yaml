@@ -1,0 +1,12 @@
+apiVersion: v2
+name: mailcow
+description: |
+  Deploy mailcow-operator including Mailcow resources on Kubernetes.
+  This acts as a shortcut to deploy mailcow-operator along with Mailcow, Domains, DomainAdmins and Mailboxes.
+type: application
+version: 0.1.0
+dependencies:
+  - name: mailcow-operator
+    version: 1.1.0
+    repository: https://tarteo.github.io/mailcow-operator
+    condition: mailcowOperator.enabled

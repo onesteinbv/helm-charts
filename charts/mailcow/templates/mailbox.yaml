@@ -1,0 +1,21 @@
+{{- range $mailcow := .Values.mailcows }}
+{{- range $domain := $mailcow.domains }}
+{{- range $mailbox := $domain.mailboxes }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Mailbox
+metadata:
+  name: {{ printf "%s-%s-%s" $mailcow.name (replace "." "-" $domain.domain) $mailbox.localPart | lower }}
+spec:
+  mailcow: {{ $mailcow.name }}
+  domain: {{ $domain.domain | quote }}
+  localPart: {{ $mailbox.localPart | quote }}
+  name: {{ $mailbox.name | quote }}
+  passwordSecret:
+    name: {{ $mailbox.passwordSecret.name }}
+    key: {{ $mailbox.passwordSecret.key }}
+  quota: {{ $mailbox.quota }}
+  active: {{ $mailbox.active }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

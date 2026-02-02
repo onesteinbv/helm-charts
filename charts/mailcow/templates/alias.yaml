@@ -1,0 +1,25 @@
+{{- range $mailcow := .Values.mailcows }}
+{{- range $domain := $mailcow.domains }}
+{{- range $alias := $domain.aliases }}
+{{- $rawAddress := $alias.address }}
+{{- $address := "" }}
+{{- if eq $rawAddress "" }}
+{{- $address = printf "@%s" $domain.domain }}
+{{- else if contains "@" $rawAddress }}
+{{- $address = $rawAddress }}
+{{- else }}
+{{- $address = printf "%s@%s" $rawAddress $domain.domain }}
+{{- end }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Alias
+metadata:
+  name: {{ printf "%s-%s-%s" $mailcow.name (replace "." "-" $domain.domain) (replace "." "-" (replace "@" "-" $address)) | lower }}
+spec:
+  mailcow: {{ $mailcow.name }}
+  address: {{ $address | quote }}
+  goTo: {{ $alias.goTo | quote }}
+  active: {{ $alias.active }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

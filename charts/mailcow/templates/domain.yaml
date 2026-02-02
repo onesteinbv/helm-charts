@@ -1,0 +1,18 @@
+{{- range $mailcow := .Values.mailcows }}
+{{- range $domain := $mailcow.domains }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Domain
+metadata:
+  name: {{ printf "%s-%s" $mailcow.name (replace "." "-" $domain.domain) | lower }}
+spec:
+  mailcow: {{ $mailcow.name }}
+  domain: {{ $domain.domain | quote }}
+  description: {{ $domain.description | quote }}
+  quota: {{ $domain.quota }}
+  defQuota: {{ $domain.defQuota }}
+  maxQuota: {{ $domain.maxQuota }}
+  active: {{ $domain.active }}
+  maxMailboxes: {{ $domain.maxMailboxes }}
+---
+{{- end }}
+{{- end }}
