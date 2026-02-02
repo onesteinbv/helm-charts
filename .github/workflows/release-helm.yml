@@ -26,6 +26,24 @@ jobs:
         with:
           version: v3.19.0
 
+      - name: Install yq
+        run: |
+          # Install yq for YAML parsing
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+          yq --version
+
+      - name: Add Helm repositories
+        run: |
+          set -euo pipefail
+          for chart in $(find . -name "Chart.yaml" -exec dirname {} \;); do
+            repos=$(yq -r '.dependencies[]?.repository | select(test("^https?://"))' "$chart/Chart.yaml")
+            for repo in $repos; do
+              repo_name=$(basename "$repo")
+              helm repo add "$repo_name" "$repo" --force-update
+            done
+          done
+
       - name: Lint Helm Charts
         run: |
           set -euo pipefail
