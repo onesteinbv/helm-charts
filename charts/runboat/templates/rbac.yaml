@@ -31,7 +31,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ include "runboat.fullname" . }}
-  namspace: {{ .Values.runboat.buildNamespace }}
+  namespace: {{ .Values.runboat.buildNamespace }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "runboat.serviceAccountName" . }}
