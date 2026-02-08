@@ -21,10 +21,16 @@ rules:
     verbs: ["create", "patch", "get", "list", "watch", "delete"]
   - apiGroups: [""]
     resources: ["secrets"]
-    verbs: ["create", "patch", "get", "list", "delete"]
+    verbs: ["create", "patch", "get", "list", "watch", "delete"]
   - apiGroups: [""]
     resources: ["pods/log"]
     verbs: ["get", "list", "watch"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "patch", "get", "list", "watch", "delete"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create", "patch", "get", "list", "watch", "delete"]
 ---
 {{- if .Values.serviceAccount.create }}
 apiVersion: rbac.authorization.k8s.io/v1
