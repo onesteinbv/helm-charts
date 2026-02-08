@@ -277,6 +277,20 @@ entries:
     version: 0.1.0
   runboat:
   - apiVersion: v2
+    created: "2026-02-08T14:45:25.072860108Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 16.4.16
+    description: A simple Odoo runbot lookalike
+    digest: 437484a28e7f5367fe726fa5f4fca79fe738b98fea0b99e7f3a9ceae5700f883
+    name: runboat
+    type: application
+    urls:
+    - https://github.com/onesteinbv/helm-charts/releases/download/helm-runboat-0.9.0/runboat-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v2
     created: "2026-02-08T14:41:58.005505124Z"
     dependencies:
     - condition: postgresql.enabled
@@ -388,4 +402,4 @@ entries:
     urls:
     - https://github.com/onesteinbv/helm-charts/releases/download/helm-runboat-0.1.0/runboat-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-08T14:41:58.00557716Z"
+generated: "2026-02-08T14:45:25.072935128Z"
