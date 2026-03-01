@@ -2,6 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ include "odoo-upgrader.fullname" . }}
+  namespace: {{ default .Release.Namespace .Values.odooUpgrader.jobNamespace }}
 rules:
   - apiGroups: ["argoproj.io"]
     resources: ["workflows"]
@@ -26,7 +27,7 @@ rules:
     verbs: ["create", "patch", "get", "list", "watch", "delete"]
   - apiGroups: [""]
     resources: ["pods"]
-    verbs: ["delete"]
+    verbs: ["get", "list", "watch", "delete"]
   - apiGroups: [""]
     resources: ["configmaps"]
     verbs: ["create", "patch", "get", "list", "watch", "delete"]
@@ -35,44 +36,18 @@ rules:
     verbs: ["create", "patch", "get", "list", "delete"]
   - apiGroups: [""]
     resources: ["pods/log"]
-    verbs: ["get", "list", "watch"]    
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: {{ include "odoo-upgrader.fullname" . }}
-rules:
-  - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["get", "watch", "list", "patch"]
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["get", "list"]
-  - apiGroups: [""]
-    resources: ["pods/exec"]
-    verbs: ["get", "list", "create"]
+    verbs: ["get", "list", "watch"]
 {{- if .Values.serviceAccount.create }}
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: {{ include "odoo-upgrader.fullname" . }}
-subjects:
-  - kind: ServiceAccount
-    name: {{ include "odoo-upgrader.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
-roleRef:
-  kind: ClusterRole
-  name: {{ include "odoo-upgrader.fullname" . }}
-  apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ include "odoo-upgrader.fullname" . }}
+  namespace: {{ default .Release.Namespace .Values.odooUpgrader.jobNamespace }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "odoo-upgrader.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
   name: {{ include "odoo-upgrader.fullname" . }}
