@@ -177,6 +177,28 @@ incomingMail:
     usernameKey: "username"
     passwordKey: "password"
 
+admin:
+  update: false
+  username: "admin"
+  password: "admin"
+  generate: false
+  existingSecret: ""
+  existingSecretKey: "password"
+  
+user:
+  update: false
+  username: ""
+
+# This updates the base.main_company record in the database with the provided values
+company: 
+  update: false
+  name: "My Company"
+  email: "mycompany@example.com"
+  coc: ""
+  city: "My City"
+  zip: ""
+  street: ""
+
 mailcow:
   enabled: false  # If enabled, CURQ will use the mailcow API to create a catch-all and configure it in CURQ
   endpoint: ""  # The endpoint for the mailcow API
@@ -194,7 +216,19 @@ keycloak:
     name: ""  # Name of the secret containing the Keycloak client secret
     key: "clientSecret"
 
-listDatabases: false
+databaseManager:
+  enabled: false
+  generate: false
+  password: "admin"
+  existingSecret: ""
+  existingSecretKey: "password"
+  filter: ".*"
+
 extraEnv: []
 additionalConfig: ""
-modules: ["container_install"]  # This is the essentials bundle, look in https://github.com/onesteinbv/addons-curq for more modules / bundles that can be added here.
+
+# This is the essentials bundle, look in https://github.com/onesteinbv/addons-curq for more modules / bundles that can be added here.
+modules: ["container_install"]
+
+# If true, modules outside of the onces specified in the bundles will be uninstalled, if false, they will be left as is.
+uninstallModules: false
