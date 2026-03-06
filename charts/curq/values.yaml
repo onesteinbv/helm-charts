@@ -157,8 +157,28 @@ database:
     database: true
     role: true
 
-mailcow:
+outgoingMail:
   enabled: false
+  host: ""
+  port: 25
+  secret:
+    name: ""  # Name of the secret containing the SMTP credentials
+    usernameKey: "username"  # Key in the secret for the SMTP username
+    passwordKey: "password"  # Key in the secret for the SMTP password
+  encryption: "none"  # Options are "none", "ssl", or "starttls"
+
+incomingMail:
+  enabled: false
+  confirm: true
+  host: ""
+  port: 587
+  secret:
+    name: ""  # Name of the secret containing the SMTP credentials
+    usernameKey: "username"
+    passwordKey: "password"
+
+mailcow:
+  enabled: false  # If enabled, CURQ will use the mailcow API to create a catch-all and configure it in CURQ
   endpoint: ""  # The endpoint for the mailcow API
   secret:
     name: ""  # Name of the secret containing the mailcow API token
@@ -177,3 +197,4 @@ keycloak:
 listDatabases: false
 extraEnv: []
 additionalConfig: ""
+modules: ["container_install"]  # This is the essentials bundle, look in https://github.com/onesteinbv/addons-curq for more modules / bundles that can be added here.
