@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "curq.fullname" . }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.http }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: {{ .Values.service.websocket }}
+      targetPort: websocket
+      protocol: TCP
+      name: websocket
+  selector:
+    {{- include "curq.selectorLabels" . | nindent 4 }}
