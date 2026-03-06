@@ -1,0 +1,6 @@
+apiVersion: v2
+name: curq
+description: CURQ is an all-in-one platform for businesses
+type: application
+version: 0.1.0
+appVersion: "18.0-slim"
