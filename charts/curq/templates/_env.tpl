@@ -85,6 +85,15 @@
 - name: "COMPANY_STREET"
   value: {{ .Values.company.street | quote }}
 
+{{/* User configuration */}}
+{{- if .Values.user.update }}
+- name: "PREPARE_CUSTOMER_USER"
+  value: "true"
+- name: "USER_EMAIL"
+  value: {{ .Values.user.email | quote }}
+{{- end }}
+{{- end }}
+
 {{/* Add additional configuration for Odoo */}}
 {{- if .Values.additionalConfig }}
 - name: "ADDITIONAL_ODOO_RC"
