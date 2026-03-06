@@ -184,13 +184,14 @@ admin:
   generate: false
   existingSecret: ""
   existingSecretKey: "password"
-  
+
+# This updates the base_customer_user.user_customer record. For more information, checkout: https://github.com/onesteinbv/addons-curq/blob/18.0/scripts/prepare_customer_user.py
 user:
   update: false
   username: ""
 
 # This updates the base.main_company record in the database with the provided values
-company: 
+company:
   update: false
   name: "My Company"
   email: "mycompany@example.com"
