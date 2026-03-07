@@ -204,12 +204,28 @@ company:
 
 mailcow:
   enabled: false  # If enabled, CURQ will use the mailcow API to create a catch-all and configure it in CURQ
-  endpoint: ""  # The endpoint for the mailcow API
+  endpoint: ""  # The endpoint of the mailcow API
   secret:
     name: ""  # Name of the secret containing the mailcow API token
     key: "token"
-  extraMailboxes: []
-  admins: []
+  catchallSecret:
+    name: ""  # Name of an existing secret containing the password for the catch-all mailbox, if not set, a new secret will be generated with a random password
+    key: "password"
+  domain: ""  # The domain to use for the catch-all mailbox, e.g. "example.com"
+
+  # Additional mailboxes to create, e.g. info, support, etc. Each entry should have the following structure: 
+  # { localPart: "info", existingSecret: "somesecret", existingSecretKey: "password", quota: 1000, sogoAccess: true }
+  extraMailboxes: [] 
+  
+  # Domain admins to create, each entry should have the following structure:
+  # { username: "mydomainadmin", existingSecret: "somesecret", existingSecretKey: "password" }
+  domainAdmins: []
+  quota: 1000
+  defQuota: 1000
+  maxQuota: 1000
+  maxMailboxes: 1
+  rateLimit: 100
+  rateLimitFrame: "s"
 
 keycloak:
   enabled: false
