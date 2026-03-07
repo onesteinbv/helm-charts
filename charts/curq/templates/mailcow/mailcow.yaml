@@ -1,0 +1,13 @@
+{{- if .Values.mailcow.enabled }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Mailcow
+metadata:
+  name: {{ include "curq.fullname" . }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+spec:
+  endpoint: {{ .Values.mailcow.endpoint | quote }}
+  secret:
+    name: {{ .Values.mailcow.secret.name | quote }}
+    key: {{ .Values.mailcow.secret.key | quote }}
+{{- end }}

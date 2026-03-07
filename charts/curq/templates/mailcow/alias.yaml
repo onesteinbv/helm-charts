@@ -1,0 +1,10 @@
+{{- if .Values.mailcow.enabled }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Alias
+metadata:
+  name: mailcow-alias
+spec:
+  mailcow: {{ include "curq.fullname" . }}
+  address: {{ printf "@%s" .Values.mailcow.domain | quote }} # Catch-all alias
+  goTo: {{ printf "catchall@%s" .Values.mailcow.domain | quote }}
+{{- end }}
