@@ -55,10 +55,33 @@
 - name: "UNINSTALL_MODULES"
   value: {{ .Values.uninstallModules | quote }}
 
+{{/* Mail configuration */}}
+{{/* Uses the mailcow configuration if host is not set, otherwise uses the provided configuration */}}
+
+{{- if .Values.outgoingMail.enabled }}
 {{/* Outgoing mail configuration */}}
 {{- if .Values.outgoingMail.enabled }}
 - name: "SETUP_SMTP"
   value: "true"
+{{- if .Values.outgoingMail.host }}
+- name: "SMTP_HOST"
+  value: {{ .Values.outgoingMail.host | quote }}
+- name: "SMTP_PORT"
+  value: {{ .Values.outgoingMail.port | quote }}
+- name: "SMTP_USER"
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.outgoingMail.secret.name | quote }}
+      key: {{ .Values.outgoingMail.secret.usernameKey | quote }}
+- name: "SMTP_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.outgoingMail.secret.name | quote }}
+      key: {{ .Values.outgoingMail.secret.passwordKey | quote }}
+{{- else if .Values.mailcow.enabled }}
+
+{{- else }}
+{{ fail "Outgoing mail is enabled but no configuration is provided" }}
 {{- end }}
 
 {{/* Incoming mail configuration */}}
@@ -67,6 +90,29 @@
   value: "true"
 - name: "INCOMING_MAIL_CONFIRM"
   value: {{ .Values.incomingMail.confirm | quote }}
+{{- if .Values.incomingMail.host }}
+- name: "INCOMING_MAIL_SERVER"
+  value: {{ .Values.incomingMail.host | quote }}
+- name: "INCOMING_MAIL_PORT"
+  value: {{ .Values.incomingMail.port | quote }}
+- name: "INCOMING_MAIL_SERVER_TYPE"
+  value: {{ .Values.incomingMail.type | quote }}
+- name: "INCOMING_MAIL_SSL"
+  value: {{ .Values.incomingMail.ssl | quote }}
+- name: "INCOMING_MAIL_USER"
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.incomingMail.secret.name | quote }}
+      key: {{ .Values.incomingMail.secret.usernameKey | quote }}
+- name: "INCOMING_MAIL_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.incomingMail.secret.name | quote }}
+      key: {{ .Values.incomingMail.secret.passwordKey | quote }}
+{{- else if .Values.mailcow.enabled }}
+
+{{- else }}
+{{ fail "Incoming mail is enabled but no configuration is provided" }}
 {{- end }}
 
 {{/* Company configuration */}}

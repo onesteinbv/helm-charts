@@ -171,7 +171,9 @@ incomingMail:
   enabled: false
   confirm: true
   host: ""
-  port: 587
+  type: "imap"
+  port: 993
+  ssl: true
   secret:
     name: ""  # Name of the secret containing the SMTP credentials
     usernameKey: "username"
