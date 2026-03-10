@@ -11,7 +11,7 @@ spec:
   localPart: "catchall"
   name: "catchall"
   passwordSecret:
-    name: {{ if .Values.mailcow.catchallSecret.name }}{{ .Values.mailcow.catchallSecret.name }}{{ else }}{{ include "curq.fullname" . }}-catchall{{ end }}
+    name: {{ .Values.mailcow.catchallSecret.name | default (printf "%s-catchall" (include "curq.fullname" .)) }}
     key: {{ .Values.mailcow.catchallSecret.key | quote }}
   quota: {{ .Values.mailcow.defQuota }}
   sogoAccess: false

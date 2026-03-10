@@ -92,7 +92,7 @@
 - name: "SMTP_PASSWORD"
   valueFrom:
     secretKeyRef:
-      name: {{ if .Values.mailcow.catchallSecret.name }}{{ .Values.mailcow.catchallSecret.name }}{{ else }}{{ include "curq.fullname" . }}-catchall{{ end }}
+      name: {{ .Values.mailcow.catchallSecret.name | default (printf "%s-catchall" (include "curq.fullname" .)) }}
       key: {{ .Values.mailcow.catchallSecret.key | quote }}
 {{- else }}
 {{ fail "Outgoing mail is enabled but no configuration is provided" }}
@@ -137,7 +137,7 @@
 - name: "INCOMING_MAIL_PASSWORD"
   valueFrom:
     secretKeyRef:
-      name: {{ if .Values.mailcow.catchallSecret.name }}{{ .Values.mailcow.catchallSecret.name }}{{ else }}{{ include "curq.fullname" . }}-catchall{{ end }}
+      name: {{ .Values.mailcow.catchallSecret.name | default (printf "%s-catchall" (include "curq.fullname" .)) }}
       key: {{ .Values.mailcow.catchallSecret.key | quote }}
 {{- else }}
 {{ fail "Incoming mail is enabled but no configuration is provided" }}
@@ -173,5 +173,9 @@
 - name: "ADDITIONAL_ODOO_RC"
   value: |
 {{ .Values.additionalConfig | nindent 4 }}
+{{- end }}
+
+{{- if .Values.extraEnv }}
+{{- toYaml .Values.extraEnv }}
 {{- end }}
 {{- end }}
