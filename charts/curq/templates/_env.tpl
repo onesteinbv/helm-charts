@@ -81,12 +81,11 @@
       name: {{ .Values.outgoingMail.secret.name | quote }}
       key: {{ .Values.outgoingMail.secret.passwordKey | quote }}
 {{- else if .Values.mailcow.enabled }}
-{{- $secret-}}
 - name: "SMTP_HOST"
   value: {{ .Values.mailcow.endpoint | quote }}
 - name: "SMTP_PORT"
   value: "465"
-- name: SMTP_ENCRYPTION
+- name: "SMTP_ENCRYPTION"
   value: "starttls"
 - name: "SMTP_USER"
   value: {{ printf "catchall@%s" .Values.mailcow.domain | quote }}
