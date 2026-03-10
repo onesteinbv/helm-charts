@@ -133,13 +133,23 @@ persistence:
 
 postgres:
   enabled: false
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 8Gi
+    storageClass: ""
+    existingClaim: ""
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 1
+      memory: 1Gi
   auth:
-    username: curq
-    password: ""
-    secret:
-      create: true
-      generate: true
-      name: ""  # Override the secret name
+    username: postgres
+    existingSecret: ""  # Name of an existing secret containing the postgres password, if not set, a new secret will be generated with a random password
+    existingSecretKey: "password"  # Key in the existing secret for the postgres password
 
 externalPostgres:
   enabled: false
@@ -152,10 +162,12 @@ externalPostgres:
 
 database:
   name: ""
-  role: ""
-  create:
-    database: true
-    role: true
+  create: true
+  role:
+    name: ""
+    create: true
+    existingSecret: ""
+    existingSecretKey: "password"
 
 outgoingMail:
   enabled: false
