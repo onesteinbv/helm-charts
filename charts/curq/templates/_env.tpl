@@ -68,6 +68,8 @@
   value: {{ .Values.outgoingMail.host | quote }}
 - name: "SMTP_PORT"
   value: {{ .Values.outgoingMail.port | quote }}
+- name: "SMTP_ENCRYPTION"
+  value: {{ .Values.outgoingMail.encryption | quote }}
 - name: "SMTP_USER"
   valueFrom:
     secretKeyRef:
@@ -79,7 +81,20 @@
       name: {{ .Values.outgoingMail.secret.name | quote }}
       key: {{ .Values.outgoingMail.secret.passwordKey | quote }}
 {{- else if .Values.mailcow.enabled }}
-
+{{- $secret-}}
+- name: "SMTP_HOST"
+  value: {{ .Values.mailcow.endpoint | quote }}
+- name: "SMTP_PORT"
+  value: "465"
+- name: SMTP_ENCRYPTION
+  value: "starttls"
+- name: "SMTP_USER"
+  value: {{ printf "catchall@%s" .Values.mailcow.domain | quote }}
+- name: "SMTP_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: {{ if .Values.mailcow.catchallSecret.name }}{{ .Values.mailcow.catchallSecret.name }}{{ else }}{{ include "curq.fullname" . }}-catchall{{ end }}
+      key: {{ .Values.mailcow.catchallSecret.key | quote }}
 {{- else }}
 {{ fail "Outgoing mail is enabled but no configuration is provided" }}
 {{- end }}
@@ -110,7 +125,21 @@
       name: {{ .Values.incomingMail.secret.name | quote }}
       key: {{ .Values.incomingMail.secret.passwordKey | quote }}
 {{- else if .Values.mailcow.enabled }}
-
+- name: "INCOMING_MAIL_SERVER"
+  value: {{ .Values.mailcow.endpoint | quote }}
+- name: "INCOMING_MAIL_PORT"
+  value: "993"
+- name: "INCOMING_MAIL_SERVER_TYPE"
+  value: "imap"
+- name: "INCOMING_MAIL_SSL"
+  value: "true"
+- name: "INCOMING_MAIL_USER"
+  value: {{ printf "catchall@%s" .Values.mailcow.domain | quote }}
+- name: "INCOMING_MAIL_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: {{ if .Values.mailcow.catchallSecret.name }}{{ .Values.mailcow.catchallSecret.name }}{{ else }}{{ include "curq.fullname" . }}-catchall{{ end }}
+      key: {{ .Values.mailcow.catchallSecret.key | quote }}
 {{- else }}
 {{ fail "Incoming mail is enabled but no configuration is provided" }}
 {{- end }}
@@ -146,6 +175,4 @@
   value: |
 {{ .Values.additionalConfig | nindent 4 }}
 {{- end }}
-
-
 {{- end }}
