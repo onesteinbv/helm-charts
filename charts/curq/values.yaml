@@ -58,15 +58,13 @@ ingress:
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-    # - secretName: chart-example-tls
-    #   hosts:
-    #     - chart-example.local
+  host: ""
+  extraHosts: []
+    # - host: chart-example.local
+    #   paths:
+    #     - path: /
+    #       pathType: ImplementationSpecific
+  tls: true
 
 resources:
   limits:
@@ -152,7 +150,6 @@ postgres:
       name: ""  # Name of an existing secret containing the postgres password, if not set, a new secret will be generated with a random password
       usernameKey: "username"  # Key in the existing secret for the postgres username, only used if existingSecret is set
       passwordKey: "password"  # Key in the existing secret for the postgres password
-
 
 externalPostgres:
   enabled: false
@@ -247,9 +244,13 @@ mailcow:
 keycloak:
   enabled: false
   endpoint: ""
-  realm: "master"
-  secret:
-    name: ""  # Name of the secret containing the Keycloak client secret
+  secret: ""  # Name of the secret containing the Keycloak username and password
+  realm:
+    name: "master"
+    preserveOnDelete: true
+  clientId: ""  # If not set, the clientId will default to curq.fullname.namespaced
+  clientSecret:
+    name: ""  # Name of the secret containing the Keycloak client secret, if not set, a new secret will be generated with a random client secret
     key: "clientSecret"
 
 databaseManager:
