@@ -124,25 +124,6 @@ persistence:
   storageClass: ""
   existingClaim: ""
 
-  volume:
-    create: false
-    accessMode: ReadWriteMany
-    csiDriver: ""
-    mountOptions: []
-    volumeAttributes: {}
-
-# When enabled, this will create an S3 bucket using the s3-operator, this bucket can then be used for filestore storage in CURQ. 
-# Using a CSI driver is recommended, but not necessary, you could also use `fs_storage`
-s3:
-  create: false
-  bucketName: ""
-  deletePolicy: "Always"
-  secret:
-    name: ""
-    accessKey: "accessKey"
-    secretKey: "secretKey"
-    endpointKey: "endpoint"
-
 postgres:
   enabled: false
   persistence:
@@ -270,7 +251,6 @@ keycloak:
 
 databaseManager:
   enabled: false
-  generate: false
   password: "admin"
   existingSecret: ""
   existingSecretKey: "password"
