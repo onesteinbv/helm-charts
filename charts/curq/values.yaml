@@ -119,15 +119,21 @@ affinity: {}
 
 persistence:
   enabled: true
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteMany
   size: 8Gi
   storageClass: ""
   existingClaim: ""
 
-  s3:
-    enabled: false
+  volume:
     create: false
-    bucket: ""  # Override the bucket name
+    accessMode: ReadWriteMany
+    csiDriver: s3.csi.aws.com
+    mountOptions: []
+    volumeAttributes:
+      bucketName: ""  # Override the bucket name, if not set, the bucket name will default to curq.fullname.namespaced
+
+  s3:
+    create: false
 
 postgres:
   enabled: false
