@@ -194,6 +194,22 @@
 {{- end }}
 {{- end }}
 
+{{/* Keycloak configuration */}}
+{{- if .Values.keycloak.enabled }}
+{{- $secretName = .Values.keycloak.clientSecret.name | default (printf "%s-keycloak-client" (include "curq.fullname" .)) -}}
+- name: "KEYCLOAK_URL"
+  value: {{ .Values.keycloak.endpoint | quote }}
+- name: "KEYCLOAK_REALM"
+  value: {{ .Values.keycloak.realm | quote }}
+- name: "KEYCLOAK_CLIENT_ID"
+  value: {{ .Values.keycloak.clientId | default (include "curq.fullname.namespaced" .) | quote }}
+- name: "KEYCLOAK_CLIENT_SECRET"
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName | quote }}
+      key: {{ .Values.keycloak.clientSecret.key | quote }}
+{{- end }}
+
 {{/* Add additional configuration for Odoo */}}
 {{- if .Values.additionalConfig }}
 - name: "ADDITIONAL_ODOO_RC"

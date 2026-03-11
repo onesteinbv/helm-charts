@@ -1,0 +1,19 @@
+{{- if .Values.keycloak.enabled }}
+{{- $secretName = .Values.keycloak.clientSecret.name | default (printf "%s-keycloak-client" (include "curq.fullname" .)) -}}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClient
+metadata:
+  name: {{ include "curq.fullname" . }}
+spec:
+  clientId: {{ .Values.keycloak.clientId | default (include "curq.fullname.namespaced" .) | quote }}
+  secret: {{ printf "$%s:%s" $secretName .Values.keycloak.clientSecret.key }}
+  realmRef:
+    name: {{ include "curq.fullname" . }}
+    kind: KeycloakRealm
+  webUrl: {{ printf "https://%s" .Values.ingress.host | quote }}
+  redirectUris:
+    - {{ printf "https://%s/auth_oauth/signin" .Values.ingress.host | quote }}
+    {{ - range .Values.ingress.extraHosts }}
+    - {{ printf "https://%s/auth_oauth/signin" . | quote }}
+    {{- end }}
+{{- end }}

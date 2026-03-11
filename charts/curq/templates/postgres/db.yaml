@@ -12,7 +12,7 @@ spec:
   name: {{ .Values.database.name }}
   encoding: UTF8
   template: template1
-  owner: {{ .Values.database.role.name }}
+  owner: {{ .Values.database.role.name | quote }}
   privileges:
   {{- if .Values.externalPostgres.enabled }}
     - role:
@@ -24,13 +24,13 @@ spec:
       temporary: true
   {{- else if .Values.postgres.enabled }}
     - role: 
-        name: {{ .Values.postgres.auth.username }}
+        name: {{ .Values.postgres.auth.username | quote }}
       connect: true
       create: true
       temporary: true
   {{- end }}
     - role: 
-        name: {{ .Values.database.role.name }}
+        name: {{ .Values.database.role.name | quote }}
       connect: true
       create: false
       temporary: true
