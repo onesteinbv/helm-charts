@@ -1,0 +1,24 @@
+apiVersion: pg.onestein.nl/v1
+kind: Postgres
+metadata:
+  name: {{ include "curq.fullname" . }}-postgres
+spec:
+  {{ - if .Values.externalPostgres.enabled }}
+  secret:
+    name: {{ .Values.externalPostgres.secret.name }}
+  hostKey: {{ .Values.externalPostgres.secret.hostKey }}
+  portKey: {{ .Values.externalPostgres.secret.portKey }}
+  usernameKey: {{ .Values.externalPostgres.secret.usernameKey }}
+  passwordKey: {{ .Values.externalPostgres.secret.passwordKey }}
+  defaultDatabase: {{ .Values.externalPostgres.defaultDatabase }}
+  {{- else if .Values.postgres.enabled }}
+  secret:
+    name: {{ include "curq.fullname" . }}-postgres
+  host: {{ include "curq.fullname" . }}-postgres
+  port: 5432
+  username: {{ .Values.postgres.auth.username }}
+  passwordKey: password
+  defaultDatabase: {{ .Values.postgres.auth.username }}
+  {{- else }}
+  {{- fail "Either an internal postgres or externalPostgres must be enabled" -}}
+  {{- end }}

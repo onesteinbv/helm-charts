@@ -1,0 +1,45 @@
+{{- if .Values.database.create }}
+{{- if not .Values.database.name }}
+{{- fail "database.name must be set when database.create is true" }}
+{{- end }}
+apiVersion: pg.onestein.nl/v1
+kind: Database
+metadata:
+  name: {{ include "curq.fullname" . }}-database
+spec:
+  postgresRef:
+    name: {{ include "curq.fullname" . }}-postgres
+  name: {{ .Values.database.name }}
+  encoding: UTF8
+  template: template1
+  owner: {{ .Values.database.role.name }}
+  privileges:
+  {{- if .Values.externalPostgres.enabled }}
+    - role:
+        secretKeyRef:
+          name: {{ .Values.externalPostgres.secret.name }}
+          key: {{ .Values.externalPostgres.secret.usernameKey }}
+      connect: true
+      create: true
+      temporary: true
+  {{- else if .Values.postgres.enabled }}
+    - role: 
+        name: {{ .Values.postgres.auth.username }}
+      connect: true
+      create: true
+      temporary: true
+  {{- end }}
+    - role: 
+        name: {{ .Values.database.role.name }}
+      connect: true
+      create: false
+      temporary: true
+    - role: 
+        name: "public"
+      connect: false
+      create: false
+      temporary: false
+  {{- with .Values.database.extraPrivileges }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

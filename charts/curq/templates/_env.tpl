@@ -1,12 +1,38 @@
 {{- define "curq.env" -}}
 
 {{/* Database configuration */}}
+{{- if .Values.externalPostgres.enabled }}
 - name: "DB_HOST"
-  value: ""
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.externalPostgres.secret.name | quote }}
+      key: {{ .Values.externalPostgres.secret.hostKey | quote }}
 - name: "DB_PORT"
-  value: ""
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.externalPostgres.secret.name | quote }}
+      key: {{ .Values.externalPostgres.secret.portKey | quote }}
+{{- else if .Values.postgres.enabled }}
+- name: "DB_HOST"
+  value: {{ include "curq.fullname" . }}-postgres
+- name: "DB_PORT"
+  value: "5432"
+{{- end }}
+- name: "DB_USER"
+  value: {{ .Values.database.role.name }}
+{{- if .Values.database.role.existingSecret }}
 - name: "DB_PASSWORD"
-  value: ""
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.database.role.existingSecret }}
+      key: {{ .Values.database.role.existingSecretKey }}
+{{- else }}
+- name: "DB_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "curq.fullname" . }}-role
+      key: password
+{{- end }}
 
 {{/* Force no crons and workers when installing or updating */}}
 {{- if or (eq .mode "install") (eq .mode "update") }}
