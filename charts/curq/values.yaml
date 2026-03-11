@@ -127,13 +127,20 @@ persistence:
   volume:
     create: false
     accessMode: ReadWriteMany
-    csiDriver: s3.csi.aws.com
+    csiDriver: ""
     mountOptions: []
-    volumeAttributes:
-      bucketName: ""  # Override the bucket name, if not set, the bucket name will default to curq.fullname.namespaced
+    volumeAttributes: {}
 
-  s3:
-    create: false
+# When enabled, this will create an S3 bucket using the s3-operator, this bucket can then be used for filestore storage in CURQ. 
+# Using a CSI driver is recommended, but not necessary, you could also use `fs_storage`
+s3:
+  create: false
+  bucketName: ""
+  secret:
+    name: ""
+    accessKey: "accessKey"
+    secretKey: "secretKey"
+    endpointKey: "endpoint"
 
 postgres:
   enabled: false

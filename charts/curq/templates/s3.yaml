@@ -1,0 +1,13 @@
+{{- if .Values.s3.create }}
+apiVersion: s3.onestein.nl/v1
+kind: Bucket
+metadata:
+  name: {{ include "curq.fullname" . }}
+spec:
+  name: {{ .Values.volume.volumeAttributes.bucketName }}
+  secret: {{ .Values.s3.secret.name }}
+  accessKey: {{ .Values.s3.secret.accessKey }}
+  secretKey: {{ .Values.s3.secret.secretKey }}
+  endpointKey: {{ .Values.s3.secret.endpointKey }}
+  deletionPolicy: Always
+{{- end }}
