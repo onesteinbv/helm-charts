@@ -136,6 +136,7 @@ persistence:
 s3:
   create: false
   bucketName: ""
+  deletePolicy: "Always"
   secret:
     name: ""
     accessKey: "accessKey"

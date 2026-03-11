@@ -1,9 +1,9 @@
 # CURQ Helm Chart
 
 The CURQ Helm chart is a collection of Kubernetes manifests that can be used to deploy CURQ on a Kubernetes cluster. 
-The chart includes convenience features such as:
+The chart includes optional convenience features such as:
 
- - S3 storage for filestore storage in CURQ
+ - S3 storage for filestore storage in CURQ (using CSI driver or `fs_storage`)
  - mailcow configuration for incoming and outgoing email
  - keycloak configuration for single sign on and authentication,
  - Postgres deployment and management using the pg-resource-operator
@@ -14,7 +14,7 @@ In this way it's very easy to get CURQ up and running on a Kubernetes cluster. A
 
  - kubernetes-secret-generator (https://github.com/mittwald/kubernetes-secret-generator)
  - pg-resource-operator (https://github.com/tarteo/pg-resource-operator)
- - s3-operator  (https://github.com/tarteo/s3-operator)
+ - s3-operator  (https://github.com/tarteo/s3-operator) for S3 bucket management, this is optional
  - mailcow-operator (https://github.com/tarteo/mailcow-operator)
 
 ## Roadmap
