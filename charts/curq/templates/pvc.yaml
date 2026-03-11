@@ -1,0 +1,20 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "curq.fullname" . }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  # If storageClass is not set, the default storage class will be used, but for static provisioning with volume.create, 
+  # we need to set storageClassName to "" to prevent the PVC from being bound to a different PV
+  {{- if or .Values.persistence.storageClass .Values.persistence.volume.create }}
+  storageClassName: {{ .Values.persistence.storageClass | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size }}
+  volumeName: {{ include "curq.fullname" . }}
+{{- end }}
