@@ -21,7 +21,7 @@ spec:
     {{- range .Values.ingress.extraHosts }}
     - hosts:
       - {{ . | quote }}
-      secretName: {{ sprintf "%s-tls-%s" (include "curq.fullname" $) (. | replace "." "-") }}
+      secretName: {{ printf "%s-tls-%s" (include "curq.fullname" $) (. | replace "." "-") }}
     {{- end }}
   {{- end }}
   rules:

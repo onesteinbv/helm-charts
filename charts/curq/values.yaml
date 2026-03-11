@@ -241,6 +241,7 @@ mailcow:
   rateLimit: 100
   rateLimitFrame: "s"
 
+# Configure Keycloak integration
 keycloak:
   enabled: false
   endpoint: ""
