@@ -147,12 +147,16 @@ postgres:
       cpu: 1
       memory: 1Gi
   auth:
-    username: postgres
-    existingSecret: ""  # Name of an existing secret containing the postgres password, if not set, a new secret will be generated with a random password
-    existingSecretKey: "password"  # Key in the existing secret for the postgres password
+    username: "curq"
+    existingSecret: 
+      name: ""  # Name of an existing secret containing the postgres password, if not set, a new secret will be generated with a random password
+      usernameKey: "username"  # Key in the existing secret for the postgres username, only used if existingSecret is set
+      passwordKey: "password"  # Key in the existing secret for the postgres password
+
 
 externalPostgres:
   enabled: false
+  defaultDatabase: "postgres"
   secret: 
     name: ""  # Name of the secret containing the postgres connection information
     hostKey: "host"  # Key in the secret for the postgres host
@@ -163,12 +167,13 @@ externalPostgres:
 database:
   name: ""
   create: true
+  extraPrivileges: []
   role:
-    name: ""
     create: true
+    name: ""
     existingSecret: ""
     existingSecretKey: "password"
-
+    
 outgoingMail:
   enabled: false
   host: ""

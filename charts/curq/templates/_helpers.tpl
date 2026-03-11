@@ -67,3 +67,10 @@ Full image name with version (tag).
 {{- define "curq.image" -}}
 {{- printf "%s:%s" .Values.image.repository .Values.image.tag | default .Chart.AppVersion }}
 {{- end }}
+
+{{/*
+Create a fully qualified app name adding the installation's namespace.
+*/}}
+{{- define "curq.fullname.namespaced" -}}
+{{- printf "%s-%s" (include "curq.fullname" .) .Release.Namespace | trunc 63 | trimSuffix "-" -}}
+{{- end -}}

@@ -1,0 +1,19 @@
+{{- if .Values.database.role.create }}
+apiVersion: pg.onestein.nl/v1
+kind: Role
+metadata:
+  name: {{ include "curq.fullname" . }}-role
+spec:
+  postgresRef:
+    name: {{ include "curq.fullname" . }}-postgres
+  name: {{ .Values.database.role.name }}
+  {{- if .Values.database.role.existingSecret }}
+  passwordSecret:
+    name: {{ .Values.database.role.existingSecret }}
+  passwordKey: {{ .Values.database.role.existingSecretKey }}
+  {{- else }}
+  passwordSecret:
+    name: {{ include "curq.fullname" . }}-role
+    key: password
+  {{- end }}
+{{- end }}
