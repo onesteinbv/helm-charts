@@ -8,9 +8,7 @@ metadata:
 spec:
   accessModes:
     - {{ .Values.persistence.accessMode }}
-  # If storageClass is not set, the default storage class will be used, but for static provisioning with volume.create, 
-  # we need to set storageClassName to "" to prevent the PVC from being bound to a different PV
-  {{- if or .Values.persistence.storageClass .Values.persistence.volume.create }}
+  {{- if or .Values.persistence.storageClass }}
   storageClassName: {{ .Values.persistence.storageClass | quote }}
   {{- end }}
   resources:
