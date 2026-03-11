@@ -15,29 +15,50 @@ spec:
   {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
-    {{- range .Values.ingress.tls }}
+    - hosts: 
+      - {{ .Values.ingress.host | quote }}
+      secretName: {{ include "curq.fullname" . }}-tls
+    {{- range .Values.ingress.extraHosts }}
     - hosts:
-        {{- range .hosts }}
-        - {{ . | quote }}
-        {{- end }}
-      secretName: {{ .secretName }}
+      - {{ . | quote }}
+      secretName: {{ sprintf "%s-tls-%s" (include "curq.fullname" $) (. | replace "." "-") }}
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            {{- with .pathType }}
-            pathType: {{ . }}
-            {{- end }}
+          - pathType: ImplementationSpecific
+            path: "/"
+            backend:
+              service:
+                name: {{ include "curq.fullname" . }}
+                port:
+                  name: http
+          - pathType: ImplementationSpecific
+            path: "/websocket"
+            backend:
+              service:
+                name: {{ include "curq.fullname" . }}
+                port:
+                  name: websocket
+    {{- range .Values.ingress.extraHosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            path: "/"
             backend:
               service:
                 name: {{ include "curq.fullname" $ }}
                 port:
-                  number: {{ $.Values.service.port }}
-          {{- end }}
+                  name: http
+          - pathType: ImplementationSpecific
+            path: "/websocket"
+            backend:
+              service:
+                name: {{ include "curq.fullname" $ }}
+                port:
+                  name: websocket
     {{- end }}
 {{- end }}
