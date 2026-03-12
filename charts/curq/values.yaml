@@ -262,5 +262,12 @@ additionalConfig: ""
 # This is the essentials bundle, look in https://github.com/onesteinbv/addons-curq for more modules / bundles that can be added here.
 modules: ["container_install"]
 
+# Uses server_environment to configure CURQ, more information can be found here: https://github.com/OCA/server-env/tree/18.0/server_environment
+serverEnvironmentConfiguration: []
+# - name: "outgoing_mail.odoo_smtp_server1"
+#   values:
+#     smtp_user: "sftp"
+#     smtp_pass: "sftp.example.com"
+
 # If true, modules outside of the onces specified in the bundles will be uninstalled, if false, they will be left as is.
 uninstallModules: false
