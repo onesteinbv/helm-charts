@@ -65,7 +65,7 @@ Create the name of the service account to use
 Full image name with version (tag).
 */}}
 {{- define "curq.image" -}}
-{{- printf "%s:%s" .Values.image.repository .Values.image.tag | default .Chart.AppVersion }}
+{{- printf "%s:%s" .Values.image.repository (.Values.image.tag | default .Chart.AppVersion) }}
 {{- end }}
 
 {{/*
