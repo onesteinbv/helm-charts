@@ -126,6 +126,9 @@ persistence:
 
 postgres:
   enabled: false
+  image:
+    repository: postgres
+    tag: "16"
   persistence:
     enabled: true
     accessMode: ReadWriteOnce
