@@ -6,7 +6,7 @@ metadata:
 spec:
   postgresRef:
     name: {{ include "curq.fullname" . }}-postgres
-  name: {{ .Values.database.role.name }}
+  name: {{ .Values.database.role.name | default (include "curq.fullname.namespaced" .) | quote }}
   {{- if .Values.database.role.existingSecret }}
   passwordSecret:
     name: {{ .Values.database.role.existingSecret }}
