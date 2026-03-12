@@ -2,7 +2,7 @@
 apiVersion: pg.onestein.nl/v1
 kind: Role
 metadata:
-  name: {{ include "curq.fullname" . }}-role
+  name: {{ include "curq.fullname" . }}-postgres-role
 spec:
   postgresRef:
     name: {{ include "curq.fullname" . }}-postgres
@@ -13,7 +13,7 @@ spec:
   passwordKey: {{ .Values.database.role.existingSecretKey }}
   {{- else }}
   passwordSecret:
-    name: {{ include "curq.fullname" . }}-role
+    name: {{ include "curq.fullname" . }}-postgres-role
     key: password
   {{- end }}
 {{- end }}

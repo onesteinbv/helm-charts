@@ -5,7 +5,7 @@
 apiVersion: pg.onestein.nl/v1
 kind: Database
 metadata:
-  name: {{ include "curq.fullname" . }}-database
+  name: {{ include "curq.fullname" . }}-postgres-database
 spec:
   postgresRef:
     name: {{ include "curq.fullname" . }}-postgres
