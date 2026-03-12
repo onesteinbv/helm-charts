@@ -211,9 +211,15 @@
 {{- end }}
 
 {{/* Add additional configuration for Odoo */}}
-{{- if .Values.additionalConfig }}
+{{- if or .Values.additionalConfig .Values.serverEnvironmentConfiguration }}
 - name: "ADDITIONAL_ODOO_RC"
   value: |
+{{ range $item := .Values.serverEnvironmentConfiguration }}
+{{ printf "[%s]" $item.name | nindent 4 }}
+{{- range $k, $v := $item.values }}
+{{ printf "%s = %s" $k $v | nindent 4 }}
+{{- end }}
+{{- end }}
 {{ .Values.additionalConfig | nindent 4 }}
 {{- end }}
 
