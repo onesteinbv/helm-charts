@@ -30,7 +30,7 @@
 - name: "DB_PASSWORD"
   valueFrom:
     secretKeyRef:
-      name: {{ include "curq.fullname" . }}-role
+      name: {{ include "curq.fullname" . }}-posrgres-role
       key: password
 {{- end }}
 
