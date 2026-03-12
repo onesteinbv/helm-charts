@@ -161,7 +161,7 @@ externalPostgres:
 
 database:
   name: ""
-  create: true
+  create: false
   extraPrivileges: []
   role:
     create: true
