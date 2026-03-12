@@ -84,7 +84,6 @@
 {{/* Mail configuration */}}
 {{/* Uses the mailcow configuration if host is not set, otherwise uses the provided configuration */}}
 
-{{- if .Values.outgoingMail.enabled }}
 {{/* Outgoing mail configuration */}}
 {{- if .Values.outgoingMail.enabled }}
 - name: "SETUP_SMTP"
@@ -122,6 +121,7 @@
       key: {{ .Values.mailcow.catchallSecret.key | quote }}
 {{- else }}
 {{ fail "Outgoing mail is enabled but no configuration is provided" }}
+{{- end }}
 {{- end }}
 
 {{/* Incoming mail configuration */}}
@@ -168,6 +168,7 @@
 {{- else }}
 {{ fail "Incoming mail is enabled but no configuration is provided" }}
 {{- end }}
+{{- end }}
 
 {{/* Company configuration */}}
 - name: "UPDATE_COMPANY"
@@ -192,7 +193,6 @@
 - name: "USER_EMAIL"
   value: {{ .Values.user.email | quote }}
 {{- end }}
-{{- end }}
 
 {{/* Keycloak configuration */}}
 {{- if .Values.keycloak.enabled }}
@@ -209,12 +209,13 @@
       name: {{ $secretName | quote }}
       key: {{ .Values.keycloak.clientSecret.key | quote }}
 {{- end }}
+{{- end }}
 
 {{/* Add additional configuration for Odoo */}}
 {{- if or .Values.additionalConfig .Values.serverEnvironmentConfiguration }}
 - name: "ADDITIONAL_ODOO_RC"
   value: |
-{{ range $item := .Values.serverEnvironmentConfiguration }}
+{{- range $item := .Values.serverEnvironmentConfiguration }}
 {{ printf "[%s]" $item.name | nindent 4 }}
 {{- range $k, $v := $item.values }}
 {{ printf "%s = %s" $k $v | nindent 4 }}
