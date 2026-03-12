@@ -14,7 +14,7 @@ spec:
   {{- else if .Values.postgres.enabled }}
   secret:
     name: {{ include "curq.fullname" . }}-postgres
-  host: {{ include "curq.fullname" . }}-postgres
+  host: {{ printf "%s-postgres.%s.svc.cluster.local" (include "curq.fullname" .) .Release.Namespace }}
   port: 5432
   username: {{ .Values.postgres.auth.username }}
   passwordKey: password
