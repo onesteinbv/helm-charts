@@ -15,7 +15,7 @@ spec:
       labels:
         name: {{ include "curq.fullname" . }}-postgres
     spec:
-      {{ - if .Values.postgres.persistence.enabled }}
+      {{- if .Values.postgres.persistence.enabled }}
       volumes:
       {{- if .Values.postgres.persistence.existingClaim }}
         - name: data
