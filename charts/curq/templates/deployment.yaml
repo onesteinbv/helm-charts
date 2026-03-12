@@ -44,6 +44,8 @@ spec:
             - name: websocket
               containerPort: {{ .Values.service.websocket }}
               protocol: TCP
+          env:
+            {{- include "curq.env" . | nindent 12 }}
           {{- with .Values.readinessProbe }}
           readinessProbe:
             {{- toYaml . | nindent 12 }}
