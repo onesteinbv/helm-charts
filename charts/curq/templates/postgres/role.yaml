@@ -14,6 +14,6 @@ spec:
   {{- else }}
   passwordSecret:
     name: {{ include "curq.fullname" . }}-postgres-role
-    key: password
+  passwordKey: password
   {{- end }}
 {{- end }}
