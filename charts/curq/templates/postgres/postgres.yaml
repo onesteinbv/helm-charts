@@ -3,7 +3,7 @@ kind: Postgres
 metadata:
   name: {{ include "curq.fullname" . }}-postgres
 spec:
-  {{ - if .Values.externalPostgres.enabled }}
+  {{- if .Values.externalPostgres.enabled }}
   secret:
     name: {{ .Values.externalPostgres.secret.name }}
   hostKey: {{ .Values.externalPostgres.secret.hostKey }}

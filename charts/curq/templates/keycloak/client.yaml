@@ -13,7 +13,7 @@ spec:
   webUrl: {{ printf "https://%s" .Values.ingress.host | quote }}
   redirectUris:
     - {{ printf "https://%s/auth_oauth/signin" .Values.ingress.host | quote }}
-    {{ - range .Values.ingress.extraHosts }}
+    {{- range .Values.ingress.extraHosts }}
     - {{ printf "https://%s/auth_oauth/signin" . | quote }}
     {{- end }}
 {{- end }}
