@@ -1,6 +1,6 @@
 {{- if .Values.database.role.create }}
 apiVersion: pg.onestein.nl/v1
-kind: Role
+kind: PostgresRole
 metadata:
   name: {{ include "curq.fullname" . }}-postgres-role
 spec:

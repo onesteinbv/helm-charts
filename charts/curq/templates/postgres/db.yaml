@@ -3,7 +3,7 @@
 {{- fail "database.name must be set when database.create is true" }}
 {{- end }}
 apiVersion: pg.onestein.nl/v1
-kind: Database
+kind: PostgresDatabase
 metadata:
   name: {{ include "curq.fullname" . }}-postgres-database
 spec:
