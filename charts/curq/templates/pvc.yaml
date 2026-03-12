@@ -14,5 +14,4 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.size }}
-  volumeName: {{ include "curq.fullname" . }}
 {{- end }}
