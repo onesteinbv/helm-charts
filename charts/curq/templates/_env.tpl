@@ -1,5 +1,17 @@
 {{- define "curq.env" -}}
 
+{{- $mode := .mode }}
+{{- if not $mode }}
+{{- if .Values.database.name }}
+{{- $mode = "InstallAndRun" }}
+{{- else }}
+{{- $mode = "Run" }}
+{{- end }}
+{{- end }}
+
+- name: "MODE"
+  value: {{ $mode | quote }}
+
 {{/* Database configuration */}}
 {{- if .Values.externalPostgres.enabled }}
 - name: "DB_HOST"
@@ -35,7 +47,7 @@
 {{- end }}
 
 {{/* Force no crons and workers when installing or updating */}}
-{{- if or (eq .mode "install") (eq .mode "update") }}
+{{- if or (eq $mode "Install") (eq $mode "Update") }}
 - name: "MAX_CRON_THREADS"
   value: "0"
 - name: "WORKERS"
