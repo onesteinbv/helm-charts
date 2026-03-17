@@ -77,7 +77,7 @@
 - name: "ADMIN_PASSWD"
   valueFrom:
     secretKeyRef:
-      name: {{ include "curq.fullname" . }}-db-manager
+      name: {{ printf "%s-db-manager" (include "curq.fullname" .) }}
       key: "password"
 {{- end }}
 
@@ -95,6 +95,19 @@
 {{- if .Values.ingress.enabled -}}  
 - name: "WEB_BASE_URL"
   value: {{ printf "%s://%s" (ternary "https" "http" .Values.ingress.tls) (.Values.ingress.host | quote) }}
+{{- end }}
+
+{{/* Admin user configuration */}}
+{{- if .Values.admin.update }}
+- name: "UPDATE_ADMIN_USER"
+  value: "true"
+- name: "ADMIN_USER_LOGIN"
+  value: {{ .Values.admin.username | quote }}
+- name: "ADMIN_USER_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.admin.existingSecret | default (printf "%s-admin-user" (include "curq.fullname" .)) | quote }}
+      key: {{ .Values.admin.existingSecretKey | default "password" | quote }}
 {{- end }}
 
 {{/* Mail configuration */}}

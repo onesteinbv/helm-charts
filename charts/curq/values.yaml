@@ -195,8 +195,6 @@ incomingMail:
 admin:
   update: false
   username: "admin"
-  password: "admin"
-  generate: false
   existingSecret: ""
   existingSecretKey: "password"
 
