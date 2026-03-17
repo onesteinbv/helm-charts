@@ -92,6 +92,10 @@
   value: {{ .Values.domain | quote }}
 - name: "UNINSTALL_MODULES"
   value: {{ .Values.uninstallModules | quote }}
+{{- if .Values.ingress.enabled -}}  
+- name: "WEB_BASE_URL"
+  value: {{ printf "%s://%s" (ternary "https" "http" .Values.ingress.tls) (.Values.ingress.host | quote) }}
+{{- end }}
 
 {{/* Mail configuration */}}
 {{/* Uses the mailcow configuration if host is not set, otherwise uses the provided configuration */}}
