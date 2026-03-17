@@ -16,4 +16,8 @@ spec:
     name: {{ include "curq.fullname" . }}-postgres-role
   passwordKey: password
   {{- end }}
+  {{- if .Values.databaseManager.enabled }}
+  attributes:
+    - CREATEDB
+  {{- end }}
 {{- end }}
