@@ -75,6 +75,7 @@ resources:
     memory: 2Gi
 
 # This is to setup the readiness and startup probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+# N.B.: Turn the failure threshold and period seconds up for the readiness probe if you enable database management as it can take a while to initialize databases
 readinessProbe:
   failureThreshold: 6
   periodSeconds: 10
