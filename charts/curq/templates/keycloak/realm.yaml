@@ -3,9 +3,11 @@ apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealm
 metadata:
   name: {{ include "curq.fullname" . }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
   annotations:
     edp.epam.com/preserve-resources-on-deletion: {{ .Values.keycloak.realm.preserveOnDelete | quote }}
-spec:
+    argocd.argoproj.io/sync-wave: "10"
   realmName: {{ .Values.keycloak.realm.name | quote }}
   keycloakRef:
     name: {{ include "curq.fullname" . }}

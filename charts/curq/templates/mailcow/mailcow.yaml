@@ -5,6 +5,8 @@ metadata:
   name: {{ include "curq.fullname" . }}
   labels:
     {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   endpoint: {{ .Values.mailcow.endpoint | quote }}
   secret:

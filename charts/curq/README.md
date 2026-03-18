@@ -7,6 +7,7 @@ The chart includes optional convenience features such as:
  - keycloak configuration for single sign on and authentication,
  - Postgres deployment and management using the pg-resource-operator
  - Configuration of `server_environment` (https://github.com/OCA/server-env)
+ - Sync wave configuration for ArgoCD
 
 In this way it's very easy to get CURQ up and running on a Kubernetes cluster. All these features are optional and can be enabled or disabled using Helm values.
 

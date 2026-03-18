@@ -11,6 +11,10 @@ apiVersion: pg.onestein.nl/v1
 kind: PostgresRoleMembership
 metadata:
   name: {{ include "curq.fullname" . }}-postgres-rolemembership
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"  
 spec:
   postgresRef:
     name: {{ include "curq.fullname" . }}-postgres

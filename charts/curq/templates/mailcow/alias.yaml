@@ -3,6 +3,8 @@ apiVersion: mailcow.onestein.nl/v1
 kind: Alias
 metadata:
   name: mailcow-alias
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   mailcow: {{ include "curq.fullname" . }}
   address: {{ printf "@%s" .Values.mailcow.domain | quote }} # Catch-all alias

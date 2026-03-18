@@ -2,6 +2,10 @@ apiVersion: pg.onestein.nl/v1
 kind: Postgres
 metadata:
   name: {{ include "curq.fullname" . }}-postgres
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"  
 spec:
   {{- if .Values.externalPostgres.enabled }}
   secret:
