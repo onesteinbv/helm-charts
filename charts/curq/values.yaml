@@ -257,7 +257,6 @@ keycloak:
 
 databaseManager:
   enabled: false
-  password: "admin"
   existingSecret: ""
   existingSecretKey: "password"
   filter: ".*"
