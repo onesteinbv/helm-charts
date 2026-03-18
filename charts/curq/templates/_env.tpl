@@ -14,7 +14,7 @@
 
 {{- if .Values.serverWideModules }}
 - name: "SERVER_WIDE_MODULES"
-  value: {{ join "," .Values.serverWideModules }}
+  value: {{ join "," .Values.serverWideModules | quote }}
 {{- end }}
 
 {{/* Database configuration */}}
