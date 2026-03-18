@@ -220,7 +220,7 @@
 - name: "PREPARE_CUSTOMER_USER"
   value: "true"
 - name: "USER_EMAIL"
-  value: {{ .Values.user.email | quote }}
+  value: {{ .Values.user.username | quote }}
 {{- end }}
 
 {{/* Keycloak configuration */}}
