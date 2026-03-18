@@ -254,6 +254,7 @@
 {{- end }}
 
 {{- if .Values.extraEnv }}
-{{- toYaml .Values.extraEnv }}
+{{- tpl (toYaml .Values.extraEnv) . }}
 {{- end }}
+
 {{- end }}
