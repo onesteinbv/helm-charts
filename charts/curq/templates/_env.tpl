@@ -219,7 +219,7 @@
 {{- if .Values.user.update }}
 - name: "PREPARE_CUSTOMER_USER"
   value: "true"
-- name: "USER_EMAIL"
+- name: "CUSTOMER_USER_LOGIN"
   value: {{ .Values.user.username | quote }}
 {{- end }}
 
