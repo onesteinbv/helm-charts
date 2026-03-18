@@ -108,6 +108,14 @@
       key: {{ .Values.admin.existingSecretKey | default "password" | quote }}
 {{- end }}
 
+{{/* User configuration */}}
+{{- if .Values.user.update }}
+- name: "PREPARE_CUSTOMER_USER"
+  value: "true"
+- name: "CUSTOMER_USER_LOGIN"
+  value: {{ .Values.user.username | quote }}
+{{- end }}
+
 {{/* Mail configuration */}}
 {{/* Uses the mailcow configuration if host is not set, otherwise uses the provided configuration */}}
 
@@ -212,14 +220,6 @@
   value: {{ .Values.company.zip | quote }}
 - name: "COMPANY_STREET"
   value: {{ .Values.company.street | quote }}
-
-{{/* User configuration */}}
-{{- if .Values.user.update }}
-- name: "PREPARE_CUSTOMER_USER"
-  value: "true"
-- name: "CUSTOMER_USER_LOGIN"
-  value: {{ .Values.user.username | quote }}
-{{- end }}
 
 {{/* Keycloak configuration */}}
 {{- if .Values.keycloak.enabled }}
