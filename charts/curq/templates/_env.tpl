@@ -88,13 +88,11 @@
   value: {{ .Values.database.name | quote }}
 - name: "MODULES"
   value: {{ join "," $modules }}
-- name: "DOMAIN"
-  value: {{ .Values.domain | quote }}
 - name: "UNINSTALL_MODULES"
   value: {{ .Values.uninstallModules | quote }}
 {{- if .Values.ingress.enabled }}  
 - name: "WEB_BASE_URL"
-  value: {{ printf "%s://%s" (ternary "https" "http" .Values.ingress.tls) (.Values.ingress.host | quote) }}
+  value: {{ printf "%s://%s" (ternary "https" "http" .Values.ingress.tls) (.Values.ingress.host) }}
 {{- end }}
 
 {{/* Admin user configuration */}}
