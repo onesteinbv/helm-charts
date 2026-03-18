@@ -166,6 +166,8 @@ database:
   extraPrivileges: []
   role:
     create: true
+    # Name of the database role to use, if not set, it will default to curq.fullname.namespaced, 
+    # this can be an existing role if create is false
     name: ""
     existingSecret: ""
     existingSecretKey: "password"
@@ -213,8 +215,10 @@ company:
   zip: ""
   street: ""
 
+# If enabled, it will create a catch-all mailbox for the specified domain using the mailcow operator, and configure it in CURQ 
+# if no host is set in the outgoingMail / incomingMail configuration.
 mailcow:
-  enabled: false  # If enabled, CURQ will use the mailcow API to create a catch-all and configure it in CURQ
+  enabled: false  
   endpoint: ""  # The endpoint of the mailcow API
   secret:
     name: ""  # Name of the secret containing the mailcow API token
