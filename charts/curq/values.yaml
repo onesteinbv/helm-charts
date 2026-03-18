@@ -264,6 +264,10 @@ additionalConfig: ""
 # This is the essentials bundle, look in https://github.com/onesteinbv/addons-curq for more modules / bundles that can be added here.
 modules: ["container_install"]
 
+# If this is empty the server wide modules will be Odoo default which is base and web
+# This can be used to override the default server wide modules. Example: ["base", "web", "session_db", "queue_job"]
+serverWideModules: []
+
 # Uses server_environment to configure CURQ, more information can be found here: https://github.com/OCA/server-env/tree/18.0/server_environment
 serverEnvironmentConfiguration: []
 # - name: "outgoing_mail.odoo_smtp_server1"

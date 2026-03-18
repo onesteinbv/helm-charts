@@ -12,6 +12,11 @@
 - name: "MODE"
   value: {{ $mode | quote }}
 
+{{- if .Values.serverWideModules }}
+- name: "SERVER_WIDE_MODULES"
+  value: {{ join "," .Values.serverWideModules }}
+{{- end }}
+
 {{/* Database configuration */}}
 {{- if .Values.externalPostgres.enabled }}
 - name: "DB_HOST"
