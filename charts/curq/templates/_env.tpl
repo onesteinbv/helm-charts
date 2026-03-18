@@ -211,6 +211,7 @@
 {{- end }}
 
 {{/* Company configuration */}}
+{{- if .Values.company.update }}
 - name: "UPDATE_COMPANY"
   value: {{ .Values.company.update | quote }}
 - name: "COMPANY_NAME"
@@ -225,6 +226,7 @@
   value: {{ .Values.company.zip | quote }}
 - name: "COMPANY_STREET"
   value: {{ .Values.company.street | quote }}
+{{- end }}
 
 {{/* Keycloak configuration */}}
 {{- if .Values.keycloak.enabled }}
