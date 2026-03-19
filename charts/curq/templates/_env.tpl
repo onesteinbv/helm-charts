@@ -147,7 +147,7 @@
       key: {{ .Values.outgoingMail.secret.passwordKey | quote }}
 {{- else if .Values.mailcow.enabled }}
 - name: "SMTP_HOST"
-  value: {{ .Values.mailcow.endpoint | quote }}
+  value: {{ .Values.mailcow.endpoint | regexReplaceAll "^https?://" "" | quote }}
 - name: "SMTP_PORT"
   value: "465"
 - name: "SMTP_ENCRYPTION"
@@ -191,7 +191,7 @@
       key: {{ .Values.incomingMail.secret.passwordKey | quote }}
 {{- else if .Values.mailcow.enabled }}
 - name: "INCOMING_MAIL_SERVER"
-  value: {{ .Values.mailcow.endpoint | quote }}
+  value: {{ .Values.mailcow.endpoint | regexReplaceAll "^https?://" "" | quote }}
 - name: "INCOMING_MAIL_PORT"
   value: "993"
 - name: "INCOMING_MAIL_SERVER_TYPE"
