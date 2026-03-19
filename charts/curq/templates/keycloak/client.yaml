@@ -1,5 +1,5 @@
 {{- if .Values.keycloak.enabled }}
-{{- $secretName = .Values.keycloak.clientSecret.name | default (printf "%s-keycloak-client" (include "curq.fullname" .)) -}}
+{{- $secretName := .Values.keycloak.clientSecret.name | default (printf "%s-keycloak-client" (include "curq.fullname" .)) }}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
 metadata:

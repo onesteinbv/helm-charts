@@ -230,7 +230,7 @@
 
 {{/* Keycloak configuration */}}
 {{- if .Values.keycloak.enabled }}
-{{- $secretName = .Values.keycloak.clientSecret.name | default (printf "%s-keycloak-client" (include "curq.fullname" .)) -}}
+{{- $secretName := .Values.keycloak.clientSecret.name | default (printf "%s-keycloak-client" (include "curq.fullname" .)) -}}
 - name: "KEYCLOAK_URL"
   value: {{ .Values.keycloak.endpoint | quote }}
 - name: "KEYCLOAK_REALM"
