@@ -1,0 +1,47 @@
+{{- if .Values.mailcow.enabled }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Mailbox
+metadata:
+  name: {{ include "curq.fullname" . }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  mailcow: {{ include "curq.fullname" . }}
+  domain: {{ .Values.mailcow.domain | quote }}
+  localPart: "catchall"
+  name: "catchall"
+  passwordSecret:
+    name: {{ .Values.mailcow.catchallSecret.name | default (printf "%s-catchall" (include "curq.fullname" .)) }}
+    key: {{ .Values.mailcow.catchallSecret.key | quote }}
+  quota: {{ .Values.mailcow.defQuota }}
+  sogoAccess: false
+  senderACL:
+    - "default"
+    - {{ .Values.mailcow.domain | quote }}  # Allow sending from the same domain 
+{{- end }}
+
+{{/* Extra mailboxes */}}
+{{- if .Values.mailcow.enabled }}
+{{- range $mailbox := .Values.mailcow.extraMailboxes }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Mailbox
+metadata:
+  name: {{ include "curq.fullname" . }}-mailbox-{{ $mailbox.localPart }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+spec:
+  mailcow: {{ include "curq.fullname" . }}
+  domain: {{ .Values.mailcow.domain | quote }}
+  localPart: {{ $mailbox.localPart | quote }}
+  name: {{ $mailbox.name | default $mailbox.localPart | quote }}
+  passwordSecret:
+    name: {{ $mailbox.existingSecret | quote }}
+    key: {{ $mailbox.existingSecretKey | default "password" | quote }}
+  quota: {{ $mailbox.quota | default .Values.mailcow.defQuota }}
+  sogoAccess: {{ $mailbox.sogoAccess | default true }}
+  senderACL:
+    - "default"
+{{- end }}
+{{- end }}

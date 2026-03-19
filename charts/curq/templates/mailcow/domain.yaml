@@ -1,0 +1,19 @@
+{{- if .Values.mailcow.enabled }}
+apiVersion: mailcow.onestein.nl/v1
+kind: Domain
+metadata:
+  name: {{ include "curq.fullname" . }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  mailcow: {{ include "curq.fullname" . }}
+  domain: {{ .Values.mailcow.domain | quote }}
+  quota: {{ .Values.mailcow.quota }}
+  defQuota: {{ .Values.mailcow.defQuota }}
+  maxQuota: {{ .Values.mailcow.maxQuota }}
+  maxMailboxes: {{ .Values.mailcow.maxMailboxes }}
+  rateLimit: {{ .Values.mailcow.rateLimit }}
+  rateLimitFrame: {{ .Values.mailcow.rateLimitFrame | quote }}
+{{- end }}

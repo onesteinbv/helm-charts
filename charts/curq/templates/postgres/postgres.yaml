@@ -1,0 +1,28 @@
+apiVersion: pg.onestein.nl/v1
+kind: Postgres
+metadata:
+  name: {{ include "curq.fullname" . }}-postgres
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"  
+spec:
+  {{- if .Values.externalPostgres.enabled }}
+  secret:
+    name: {{ .Values.externalPostgres.secret.name }}
+  hostKey: {{ .Values.externalPostgres.secret.hostKey }}
+  portKey: {{ .Values.externalPostgres.secret.portKey }}
+  usernameKey: {{ .Values.externalPostgres.secret.usernameKey }}
+  passwordKey: {{ .Values.externalPostgres.secret.passwordKey }}
+  defaultDatabase: {{ .Values.externalPostgres.defaultDatabase }}
+  {{- else if .Values.postgres.enabled }}
+  secret:
+    name: {{ include "curq.fullname" . }}-postgres
+  host: {{ printf "%s-postgres.%s.svc.cluster.local" (include "curq.fullname" .) .Release.Namespace }}
+  port: 5432
+  username: {{ .Values.postgres.auth.username }}
+  passwordKey: password
+  defaultDatabase: {{ .Values.postgres.auth.username }}
+  {{- else }}
+  {{- fail "Either an internal postgres or externalPostgres must be enabled" -}}
+  {{- end }}

@@ -1,0 +1,27 @@
+{{- if .Values.database.role.create }}
+apiVersion: pg.onestein.nl/v1
+kind: PostgresRole
+metadata:
+  name: {{ include "curq.fullname" . }}-postgres-role
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"  
+spec:
+  postgresRef:
+    name: {{ include "curq.fullname" . }}-postgres
+  name: {{ .Values.database.role.name | default (include "curq.fullname.namespaced" .) | quote }}
+  {{- if .Values.database.role.existingSecret }}
+  passwordSecret:
+    name: {{ .Values.database.role.existingSecret }}
+  passwordKey: {{ .Values.database.role.existingSecretKey }}
+  {{- else }}
+  passwordSecret:
+    name: {{ include "curq.fullname" . }}-postgres-role
+  passwordKey: password
+  {{- end }}
+  {{- if .Values.databaseManager.enabled }}
+  attributes:
+    - CREATEDB
+  {{- end }}
+{{- end }}

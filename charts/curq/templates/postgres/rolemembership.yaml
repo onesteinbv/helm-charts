@@ -1,0 +1,27 @@
+{{/* 
+Make the user / role that connects to the external database (therefore creates the role) member of the created role. This is 
+required to allow the database user to perform actions on the database as it is not necessarily a superuser. The role needs 
+to be owner of the database to be able to drop it by granting the created role membership to the database user it can be 
+ensured that the database user can drop the database when the release is deleted.
+
+This is not required when using an internal PostgreSQL instance as we know the user is a superuser (.Values.postgres.auth.username).
+*/}}
+{{- if and .Values.database.role.create .Values.externalPostgres.enabled }}
+apiVersion: pg.onestein.nl/v1
+kind: PostgresRoleMembership
+metadata:
+  name: {{ include "curq.fullname" . }}-postgres-rolemembership
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"  
+spec:
+  postgresRef:
+    name: {{ include "curq.fullname" . }}-postgres
+  role:
+    name: {{ .Values.database.role.name | default (include "curq.fullname.namespaced" .) | quote }}
+  member:
+    secretKeyRef:
+      name: {{ .Values.externalPostgres.secret.name }}
+      key: {{ .Values.externalPostgres.secret.usernameKey }}
+{{- end }}

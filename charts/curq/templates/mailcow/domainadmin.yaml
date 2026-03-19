@@ -1,0 +1,20 @@
+{{- if .Values.mailcow.enabled }}
+{{- range $admin := .Values.mailcow.domainAdmins  }}
+apiVersion: mailcow.onestein.nl/v1
+kind: DomainAdmin
+metadata:
+  name: {{ include "curq.fullname" . }}-domainadmin-{{ $admin.username }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  mailcow: {{ include "curq.fullname" . }}
+  username: {{ $admin.username | quote }}
+  passwordSecret:
+    name: {{ $admin.existingSecret | quote }}
+    key: {{ $admin.existingSecretKey | default "password" | quote }}
+  domains:
+    - {{ .Values.mailcow.domain | quote }}
+{{- end }}
+{{- end }}

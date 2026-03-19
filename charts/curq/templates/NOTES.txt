@@ -1,0 +1,2 @@
+1. Get the admin password:
+   kubectl get secret {{ printf "%s-admin-user" (include "curq.fullname" .) }} --namespace {{ .Release.Namespace }}  -o jsonpath="{.data.password}" | base64 --decode

@@ -1,0 +1,62 @@
+{{- if .Values.postgres.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "curq.fullname" . }}-postgres
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ include "curq.fullname" . }}-postgres
+  serviceName: {{ include "curq.fullname" . }}-postgres
+  template:
+    metadata:
+      labels:
+        name: {{ include "curq.fullname" . }}-postgres
+    spec:
+      {{- if .Values.postgres.persistence.enabled }}
+      volumes:
+      {{- if .Values.postgres.persistence.existingClaim }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.postgres.persistence.existingClaim }}
+      {{- else }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "curq.fullname" . }}-postgres
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: postgres
+          image: {{ printf "%s:%s" .Values.postgres.image.repository .Values.postgres.image.tag }}
+          ports:
+            - name: postgres
+              containerPort: 5432
+          resources:
+            requests:
+              cpu: {{ .Values.postgres.resources.requests.cpu }}
+              memory: {{ .Values.postgres.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.postgres.resources.limits.cpu }}
+              memory: {{ .Values.postgres.resources.limits.memory }}
+          {{- if .Values.postgres.persistence.enabled }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          {{- end }}
+          env:
+            {{- include "curq.postgresEnv" . | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

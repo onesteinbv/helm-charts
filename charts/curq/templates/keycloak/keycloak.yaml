@@ -1,0 +1,13 @@
+{{- if .Values.keycloak.enabled }}
+apiVersion: v1.edp.epam.com/v1
+kind: Keycloak
+metadata:
+  name: {{ include "curq.fullname" . }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"  
+spec:
+  secret: {{ .Values.keycloak.secret | quote }}
+  url: {{ .Values.keycloak.endpoint | quote }}
+{{- end }}
