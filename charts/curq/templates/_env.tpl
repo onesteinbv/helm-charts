@@ -151,7 +151,7 @@
 - name: "SMTP_PORT"
   value: "465"
 - name: "SMTP_ENCRYPTION"
-  value: "starttls"
+  value: "ssl"
 - name: "SMTP_USER"
   value: {{ printf "catchall@%s" .Values.mailcow.domain | quote }}
 - name: "SMTP_PASSWORD"
