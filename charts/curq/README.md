@@ -4,10 +4,10 @@ The CURQ Helm chart is a collection of Kubernetes manifests that can be used to 
 The chart includes optional convenience features such as:
 
  - mailcow configuration for incoming and outgoing email
- - keycloak configuration for single sign on and authentication,
- - Postgres deployment and management using the pg-resource-operator
- - Configuration of `server_environment` (https://github.com/OCA/server-env)
- - Sync wave configuration for ArgoCD
+ - keycloak configuration for single sign on and authentication
+ - postgres deployment and management using the pg-resource-operator
+ - configuration of `server_environment` (https://github.com/OCA/server-env)
+ - sync wave configuration for ArgoCD
 
 In this way it's very easy to get CURQ up and running on a Kubernetes cluster. All these features are optional and can be enabled or disabled using Helm values.
 
@@ -16,6 +16,7 @@ In this way it's very easy to get CURQ up and running on a Kubernetes cluster. A
  - kubernetes-secret-generator (https://github.com/mittwald/kubernetes-secret-generator)
  - pg-resource-operator (https://github.com/tarteo/pg-resource-operator)
  - mailcow-operator (https://github.com/tarteo/mailcow-operator)
+ - edp-keycloak-operator (https://github.com/epam/edp-keycloak-operator)
 
 ## Roadmap
 
