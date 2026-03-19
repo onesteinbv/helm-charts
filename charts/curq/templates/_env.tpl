@@ -69,7 +69,7 @@
 - name: "LIST_DB"
   value: "False"
 - name: "DB_FILTER"
-  value: {{ printf "^%s$" (.Values.database.name | quote) }}
+  value: {{ printf "^%s$" .Values.database.name }}
 {{- end }}
 
 {{- if .Values.databaseManager.existingSecret }}
