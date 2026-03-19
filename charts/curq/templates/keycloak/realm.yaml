@@ -8,6 +8,7 @@ metadata:
   annotations:
     edp.epam.com/preserve-resources-on-deletion: {{ .Values.keycloak.realm.preserveOnDelete | quote }}
     argocd.argoproj.io/sync-wave: "10"
+spec:
   realmName: {{ .Values.keycloak.realm.name | quote }}
   keycloakRef:
     name: {{ include "curq.fullname" . }}
