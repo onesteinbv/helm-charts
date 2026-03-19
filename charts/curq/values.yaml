@@ -126,7 +126,7 @@ persistence:
   existingClaim: ""
 
 postgres:
-  enabled: false
+  enabled: true
   image:
     repository: postgres
     tag: "16"
