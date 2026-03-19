@@ -234,7 +234,7 @@
 - name: "KEYCLOAK_URL"
   value: {{ .Values.keycloak.endpoint | quote }}
 - name: "KEYCLOAK_REALM"
-  value: {{ .Values.keycloak.realm | quote }}
+  value: {{ .Values.keycloak.realm.name | quote }}
 - name: "KEYCLOAK_CLIENT_ID"
   value: {{ .Values.keycloak.clientId | default (include "curq.fullname.namespaced" .) | quote }}
 - name: "KEYCLOAK_CLIENT_SECRET"
