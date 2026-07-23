@@ -154,7 +154,7 @@ cnpg:
   enabled: false
   image:
     repository: ghcr.io/cloudnative-pg/postgresql
-    tag: "16.14-202607170949-standard-bookworm"
+    tag: "16.14-202607170949-system-bookworm"
   pullPolicy: "Always"
   instances: 1
   postgresqlParameters:
