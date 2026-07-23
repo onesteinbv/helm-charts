@@ -34,6 +34,17 @@
   value: {{ include "curq.fullname" . }}-postgres
 - name: "DB_PORT"
   value: "5432"
+{{- else if .Values.cnpg.enabled }}
+- name: "DB_HOST"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "curq.fullname" . }}-app
+      key: host
+- name: "DB_PORT"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "curq.fullname" . }}-app
+      key: port
 {{- end }}
 - name: "DB_USER"
   value: {{ .Values.database.role.name | default (include "curq.fullname.namespaced.truncated" .) | quote }}

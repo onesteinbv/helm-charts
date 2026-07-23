@@ -31,6 +31,14 @@ spec:
   bootstrap:
     initdb:
       database: {{ .Values.database.name | quote }}
+      owner: {{ .Values.database.role.name | default (include "curq.fullname.namespaced.truncated" .) | quote }}
+      {{- if .Values.database.role.existingSecret }}
+      secret:
+        name: {{ .Values.database.role.existingSecret | quote }}
+      {{- else }}
+      secret:
+        name: {{ include "curq.fullname" . }}-postgres-role
+      {{- end }}
   {{- if .Values.cnpg.backup.enabled }}
   backup:
     retentionPolicy: {{ .Values.cnpg.backup.retentionPolicy | quote }}
