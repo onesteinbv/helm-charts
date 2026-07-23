@@ -182,11 +182,13 @@ cnpg:
       bucket: 
         name: ""
         create: false
+        deletionPolicy: Preserve
       directory: ""
       secret: 
         name: ""
-        accessKeyId: ""
-        secretAccessKey: ""
+        endpointKey: "endpoint"
+        accessKeyId: "accessKeyId"
+        secretAccessKey: "secretAccessKey"
 
 externalPostgres:
   enabled: false
