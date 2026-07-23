@@ -150,6 +150,43 @@ postgres:
       usernameKey: "username"  # Key in the existing secret for the postgres username, only used if existingSecret is set
       passwordKey: "password"  # Key in the existing secret for the postgres password
 
+cnpg:
+  enabled: false
+  image:
+    repository: ghcr.io/cloudnative-pg/postgresql
+    tag: "16.14-202607170949-standard-bookworm"
+  pullPolicy: "Always"
+  instances: 1
+  postgresqlParameters:
+    shared_buffers: "1024MB"
+    tcp_keepalives_idle: "600"
+    tcp_keepalives_interval: "30"
+    tcp_keepalives_count: "3"
+    tcp_user_timeout: "60000"
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 500m
+    limits:
+      memory: 4Gi
+      cpu: 2000m
+  storage: 8Gi
+  walStorage: 4Gi
+  enableSuperuserAccess: true
+  backup:
+    enabled: true
+    retentionPolicy: "30d"
+    s3:
+      endpoint: "https://s3.amazonaws.com"
+      bucket: 
+        name: ""
+        create: false
+      directory: ""
+      secret: 
+        name: ""
+        accessKeyId: ""
+        secretAccessKey: ""
+
 externalPostgres:
   enabled: false
   defaultDatabase: "postgres"
@@ -166,7 +203,7 @@ database:
   extraPrivileges: []
   role:
     create: true
-    # Name of the database role to use, if not set, it will default to curq.fullname.namespaced, 
+    # Name of the database role to use, if not set, it will default to curq.fullname.namespaced.truncated, 
     # this can be an existing role if create is false
     name: ""
     existingSecret: ""
