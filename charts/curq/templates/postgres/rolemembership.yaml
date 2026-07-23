@@ -19,7 +19,7 @@ spec:
   postgresRef:
     name: {{ include "curq.fullname" . }}-postgres
   role:
-    name: {{ .Values.database.role.name | default (include "curq.fullname.namespaced" .) | quote }}
+    name: {{ .Values.database.role.name | default (include "curq.fullname.namespaced.truncated" .) | quote }}
   member:
     secretKeyRef:
       name: {{ .Values.externalPostgres.secret.name }}

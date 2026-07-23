@@ -36,7 +36,7 @@
   value: "5432"
 {{- end }}
 - name: "DB_USER"
-  value: {{ .Values.database.role.name | default (include "curq.fullname.namespaced" .) | quote }}
+  value: {{ .Values.database.role.name | default (include "curq.fullname.namespaced.truncated" .) | quote }}
 {{- if .Values.database.role.existingSecret }}
 - name: "DB_PASSWORD"
   valueFrom:
