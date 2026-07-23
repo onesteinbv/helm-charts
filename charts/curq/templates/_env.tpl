@@ -38,12 +38,12 @@
 - name: "DB_HOST"
   valueFrom:
     secretKeyRef:
-      name: {{ include "curq.fullname" . }}-app
+      name: {{ include "curq.fullname" . }}-superuser
       key: host
 - name: "DB_PORT"
   valueFrom:
     secretKeyRef:
-      name: {{ include "curq.fullname" . }}-app
+      name: {{ include "curq.fullname" . }}-superuser
       key: port
 {{- end }}
 - name: "DB_USER"
