@@ -5,6 +5,7 @@ metadata:
   name: {{ include "curq.fullname" . }}-cnpg-backup
 spec:
   name: {{ .Values.cnpg.backup.s3.bucket.name | quote }}
+  region: {{ .Values.cnpg.backup.s3.bucket.region | quote }}
   secret: {{ .Values.cnpg.backup.s3.secret.name | quote }}
   accessKey: {{ .Values.cnpg.backup.s3.secret.accessKeyId | default "accessKeyId"  | quote }}
   secretKey: {{ .Values.cnpg.backup.s3.secret.secretAccessKey | default "secretAccessKey" | quote }}

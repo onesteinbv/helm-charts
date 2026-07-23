@@ -181,6 +181,7 @@ cnpg:
       endpoint: "https://s3.amazonaws.com"
       bucket: 
         name: ""
+        region: "us-east-1"
         create: false
         deletionPolicy: Preserve
       directory: ""
