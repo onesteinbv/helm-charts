@@ -176,6 +176,7 @@ cnpg:
   backup:
     enabled: true
     retentionPolicy: "30d"
+    schedule: "0 0 0 * * *"
     s3:
       endpoint: "https://s3.amazonaws.com"
       bucket: 

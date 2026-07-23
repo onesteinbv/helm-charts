@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: {{ include "curq.fullname" . }}
+spec:
+  cluster:
+    name: {{ include "curq.fullname" . }}
+  schedule: {{ .Values.cnpg.backup.schedule }}
+  immediate: true
