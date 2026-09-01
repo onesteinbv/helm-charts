@@ -1,0 +1,14 @@
+{{- if and .Values.cnpg.enabled .Values.cnpg.backup.enabled .Values.cnpg.backup.s3.bucket.create }}
+apiVersion: s3.onestein.nl/v1
+kind: Bucket
+metadata:
+  name: {{ include "curq.fullname" . }}-cnpg-backup
+spec:
+  name: {{ .Values.cnpg.backup.s3.bucket.name | quote }}
+  region: {{ .Values.cnpg.backup.s3.bucket.region | quote }}
+  secret: {{ .Values.cnpg.backup.s3.secret.name | quote }}
+  accessKey: {{ .Values.cnpg.backup.s3.secret.accessKeyId | default "accessKeyId"  | quote }}
+  secretKey: {{ .Values.cnpg.backup.s3.secret.secretAccessKey | default "secretAccessKey" | quote }}
+  endpointKey: {{ .Values.cnpg.backup.s3.secret.endpointKey | default "endpoint" | quote }}
+  deletionPolicy: {{ .Values.cnpg.backup.s3.bucket.deletionPolicy | default "Preserve" | quote }}
+{{- end }}

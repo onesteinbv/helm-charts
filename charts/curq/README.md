@@ -8,6 +8,7 @@ The chart includes optional convenience features such as:
  - postgres deployment and management using the pg-resource-operator
  - configuration of `server_environment` (https://github.com/OCA/server-env)
  - sync wave configuration for ArgoCD
+ - CNPG configuration including and scheduled backups and WAL archiving (in s3) using barman
 
 In this way it's very easy to get CURQ up and running on a Kubernetes cluster. All these features are optional and can be enabled or disabled using Helm values.
 
@@ -17,7 +18,9 @@ In this way it's very easy to get CURQ up and running on a Kubernetes cluster. A
  - pg-resource-operator (https://github.com/tarteo/pg-resource-operator)
  - mailcow-operator (https://github.com/tarteo/mailcow-operator)
  - edp-keycloak-operator (https://github.com/epam/edp-keycloak-operator)
+ - cnpg-operator (https://github.com/cloudnative-pg/cloudnative-pg)
 
 ## Roadmap
 
  - Move or use existing chart for postgres deployment, currently the postgres deployment is included in the CURQ chart, but it should be moved to a separate chart and used as a dependency. This will allow for better separation of concerns and make it easier to manage the postgres deployment independently of the curq deployment.
+ - Refactor backup configuration of CNPG to be more flexible to allow more than just s3. Currently the backup configuration is hardcoded to use s3, but it should be refactored to allow for other object stores. 

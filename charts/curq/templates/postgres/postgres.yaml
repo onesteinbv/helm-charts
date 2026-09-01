@@ -23,6 +23,14 @@ spec:
   username: {{ .Values.postgres.auth.username }}
   passwordKey: password
   defaultDatabase: {{ .Values.postgres.auth.username }}
+  {{- else if .Values.cnpg.enabled }}
+  secret:
+    name: {{ include "curq.fullname" . }}-superuser
+  hostKey: "host"
+  portKey: "port"
+  usernameKey: "username"
+  passwordKey: "password"
+  defaultDatabase: {{ .Values.database.name }}
   {{- else }}
-  {{- fail "Either an internal postgres or externalPostgres must be enabled" -}}
+  {{- fail "Either an internal postgres, internal CNPG cluster, or externalPostgres must be enabled" -}}
   {{- end }}
