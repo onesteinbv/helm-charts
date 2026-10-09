@@ -5,6 +5,10 @@ metadata:
   name: {{ include "curq.fullname" . }}
   labels:
     {{- include "curq.labels" . | nindent 4 }}
+    # To propogate the labels to the pods, it must be enabled in operator configuration: https://cloudnative-pg.io/documentation/1.23/labels_annotations/
+    {{- with .Values.podLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}    
 spec:
   imageName: {{ printf "%s:%s" .Values.cnpg.image.repository .Values.cnpg.image.tag }}
   imagePullPolicy: {{ .Values.cnpg.pullPolicy | default "Always" | quote }}
@@ -40,6 +44,8 @@ spec:
       secret:
         name: {{ include "curq.fullname" . }}-postgres-role
       {{- end }}
+      postInitTemplateSQL:
+        {{- toYaml .Values.cnpg.postInitTemplateSQL | nindent 8 }}
   {{- if .Values.cnpg.backup.enabled }}
   backup:
     target: prefer-standby
