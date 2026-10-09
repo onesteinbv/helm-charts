@@ -40,6 +40,8 @@ spec:
       secret:
         name: {{ include "curq.fullname" . }}-postgres-role
       {{- end }}
+      postInitTemplateSQL:
+        {{- toYaml .Values.cnpg.postInitTemplateSQL | nindent 8 }}
   {{- if .Values.cnpg.backup.enabled }}
   backup:
     target: prefer-standby

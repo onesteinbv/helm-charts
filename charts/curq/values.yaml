@@ -157,6 +157,8 @@ cnpg:
     tag: "16.14-202607170949-system-bookworm"
   pullPolicy: "Always"
   instances: 1
+  postInitTemplateSQL: []
+  # - CREATE EXTENSION postgis;
   postgresqlParameters:
     shared_buffers: "1024MB"
     tcp_keepalives_idle: "600"
