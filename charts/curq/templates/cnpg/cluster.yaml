@@ -1,0 +1,61 @@
+{{- if .Values.cnpg.enabled }}
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "curq.fullname" . }}
+  labels:
+    {{- include "curq.labels" . | nindent 4 }}
+spec:
+  imageName: {{ printf "%s:%s" .Values.cnpg.image.repository .Values.cnpg.image.tag }}
+  imagePullPolicy: {{ .Values.cnpg.pullPolicy | default "Always" | quote }}
+  instances: {{ .Values.cnpg.instances }}
+  postgresql:
+    parameters:
+      {{- range $key, $value := .Values.cnpg.postgresqlParameters }}
+      {{ $key }}: {{ $value | quote }}
+      {{- end }}
+  resources:
+    requests:
+      memory: {{ .Values.cnpg.resources.requests.memory }}
+      cpu: {{ .Values.cnpg.resources.requests.cpu }}
+    limits:
+      memory: {{ .Values.cnpg.resources.limits.memory }}
+      cpu: {{ .Values.cnpg.resources.limits.cpu }}
+  storage:
+    size: {{ .Values.cnpg.storage }}
+  walStorage:
+    size: {{ .Values.cnpg.walStorage }}
+  monitoring:
+    enablePodMonitor: true
+  enableSuperuserAccess: {{ .Values.cnpg.enableSuperuserAccess }}
+  primaryUpdateMethod: "switchover"
+  bootstrap:
+    initdb:
+      database: {{ .Values.database.name | quote }}
+      owner: {{ .Values.database.role.name | default (include "curq.fullname.namespaced.truncated" .) | quote }}
+      {{- if .Values.database.role.existingSecret }}
+      secret:
+        name: {{ .Values.database.role.existingSecret | quote }}
+      {{- else }}
+      secret:
+        name: {{ include "curq.fullname" . }}-postgres-role
+      {{- end }}
+  {{- if .Values.cnpg.backup.enabled }}
+  backup:
+    target: prefer-standby
+    retentionPolicy: {{ .Values.cnpg.backup.retentionPolicy | quote }}
+    barmanObjectStore:
+      endpointURL: {{ .Values.cnpg.backup.s3.endpoint | quote }}
+      destinationPath: {{ printf "s3://%s/" .Values.cnpg.backup.s3.bucket.name | quote }}
+      serverName: {{ .Values.cnpg.backup.s3.directory | default (include "curq.fullname.namespaced" .) | quote }}
+      s3Credentials:
+        accessKeyId:
+          name: {{ .Values.cnpg.backup.s3.secret.name | quote }}
+          key: {{ .Values.cnpg.backup.s3.secret.accessKeyId | default "accessKeyId" | quote }}
+        secretAccessKey:
+          name: {{ .Values.cnpg.backup.s3.secret.name | quote }}
+          key: {{ .Values.cnpg.backup.s3.secret.secretAccessKey | default "secretAccessKey" | quote }}
+      wal:
+        compression: gzip
+  {{- end }}
+{{- end }}

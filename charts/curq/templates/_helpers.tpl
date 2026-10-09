@@ -69,8 +69,15 @@ Full image name with version (tag).
 {{- end }}
 
 {{/*
+Create a fully qualified app name adding the installation's namespace. Limited to 63 characters.
+*/}}
+{{- define "curq.fullname.namespaced.truncated" -}}
+{{- printf "%s-%s" (include "curq.fullname" .) .Release.Namespace | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
 Create a fully qualified app name adding the installation's namespace.
 */}}
 {{- define "curq.fullname.namespaced" -}}
-{{- printf "%s-%s" (include "curq.fullname" .) .Release.Namespace | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" (include "curq.fullname" .) .Release.Namespace -}}
 {{- end -}}

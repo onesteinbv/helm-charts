@@ -16,7 +16,7 @@ spec:
   name: {{ .Values.database.name }}
   encoding: UTF8
   template: template1
-  owner: {{ .Values.database.role.name | default (include "curq.fullname.namespaced" .) | quote }}
+  owner: {{ .Values.database.role.name | default (include "curq.fullname.namespaced.truncated" .) | quote }}
   privileges:
   {{- if .Values.externalPostgres.enabled }}
     - role:
@@ -34,7 +34,7 @@ spec:
       temporary: true
   {{- end }}
     - role: 
-        name: {{ .Values.database.role.name | default (include "curq.fullname.namespaced" .) | quote }}
+        name: {{ .Values.database.role.name | default (include "curq.fullname.namespaced.truncated" .) | quote }}
       connect: true
       create: false
       temporary: true
