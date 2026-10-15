@@ -27,8 +27,10 @@ spec:
       cpu: {{ .Values.cnpg.resources.limits.cpu }}
   storage:
     size: {{ .Values.cnpg.storage }}
+  {{- if .Values.cnpg.walStorage }}
   walStorage:
     size: {{ .Values.cnpg.walStorage }}
+  {{- end }}
   monitoring:
     enablePodMonitor: true
   enableSuperuserAccess: {{ .Values.cnpg.enableSuperuserAccess }}

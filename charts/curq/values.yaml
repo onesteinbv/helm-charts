@@ -173,7 +173,7 @@ cnpg:
       memory: 4Gi
       cpu: 2000m
   storage: 8Gi
-  walStorage: 4Gi
+  walStorage: ""  # Size of the WAL storage, leave empty to disable separate WAL storage
   enableSuperuserAccess: true
   backup:
     enabled: true
