@@ -3,6 +3,16 @@ entries:
   curq:
   - apiVersion: v2
     appVersion: "18.0"
+    created: "2026-10-15T13:08:42.693541771Z"
+    description: CURQ is an all-in-one platform for businesses
+    digest: 19a3bac59b2ee85f44c795a1552baa9da90edabc2e45ba55c9c879d18093e444
+    name: curq
+    type: application
+    urls:
+    - https://github.com/onesteinbv/helm-charts/releases/download/helm-curq-0.1.3/curq-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: "18.0"
     created: "2026-10-09T09:25:00.0089745Z"
     description: CURQ is an all-in-one platform for businesses
     digest: 794054b32395ffd70b99f01f3d02efc6c80d81b0faa85fcb678b3fe8ab2c6c53
@@ -476,4 +486,4 @@ entries:
     urls:
     - https://github.com/onesteinbv/helm-charts/releases/download/helm-runboat-0.1.0/runboat-0.1.0.tgz
     version: 0.1.0
-generated: "2026-10-09T09:25:00.009055032Z"
+generated: "2026-10-15T13:08:42.693619236Z"
