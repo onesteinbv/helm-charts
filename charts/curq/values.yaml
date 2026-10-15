@@ -157,6 +157,8 @@ cnpg:
     tag: "16.14-202607170949-system-bookworm"
   pullPolicy: "Always"
   instances: 1
+  postInitTemplateSQL: []
+  # - CREATE EXTENSION postgis;
   postgresqlParameters:
     shared_buffers: "1024MB"
     tcp_keepalives_idle: "600"
@@ -171,7 +173,7 @@ cnpg:
       memory: 4Gi
       cpu: 2000m
   storage: 8Gi
-  walStorage: 4Gi
+  walStorage: ""  # Size of the WAL storage, leave empty to disable separate WAL storage
   enableSuperuserAccess: true
   backup:
     enabled: true
